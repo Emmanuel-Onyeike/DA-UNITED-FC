@@ -33,30 +33,23 @@
         </div>
     </nav>
 
-    <!-- PIN LOGIN MODAL -->
+<!-- PIN LOGIN MODAL -->
     <div id="pin-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md">
         <div class="tactical-card p-8 rounded-2xl max-w-xs w-full text-center">
             <h2 class="text-xl font-bold mb-6">ADMIN ACCESS</h2>
             <p class="text-xs text-slate-400 mb-4">Enter Security PIN</p>
-            
-            <input 
-                id="pin-input" 
-                type="password" 
-                maxlength="6" 
-                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-5 py-4 text-center text-2xl tracking-widest focus:outline-none focus:border-cyan-500"
-                placeholder="••••••"
-                onkeypress="if(event.key === 'Enter') verifyPin()">
-            
+            <input id="pin-input" type="password" maxlength="6" 
+                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-5 py-4 text-center text-2xl tracking-widest focus:outline-none focus:border-cyan-500"
+                   placeholder="••••••" onkeypress="if(event.key === 'Enter') verifyPin()">
             <button onclick="verifyPin()" class="mt-6 w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3.5 rounded-xl font-bold">VERIFY ACCESS</button>
-            
             <p id="pin-error" class="text-red-400 text-xs mt-4 hidden">Invalid PIN</p>
         </div>
     </div>
 
-    <!-- Main Admin Content (Hidden until PIN is correct) -->
+    <!-- MAIN ADMIN CONTENT -->
     <div id="main-admin" class="hidden">
 
-        <!-- Modal -->
+        <!-- Alert Modal -->
         <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm">
             <div class="tactical-card p-6 rounded-xl max-w-sm w-full">
                 <h3 class="text-cyan-400 font-mono uppercase text-sm mb-2">SYSTEM ALERT</h3>
@@ -75,190 +68,144 @@
             </div>
         </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-10">
-        <h1 class="text-4xl font-black mb-1">OVERWATCH CONTROL</h1>
-        <p class="text-slate-400 mb-8">Manage all live sections from one command center</p>
+        <main class="max-w-7xl mx-auto px-6 py-10">
+            <h1 class="text-4xl font-black mb-1">OVERWATCH CONTROL</h1>
+            <p class="text-slate-400 mb-8">Manage all live sections from one command center</p>
 
-        <!-- Tabs -->
-        <div class="flex border-b border-slate-800 mb-8 overflow-x-auto">
-            <button onclick="switchTab(0)" class="tab px-6 py-3 text-sm font-bold tab-active" id="tab-0">GAMES</button>
-            <button onclick="switchTab(1)" class="tab px-6 py-3 text-sm font-bold" id="tab-1">SQUAD</button>
-            <button onclick="switchTab(2)" class="tab px-6 py-3 text-sm font-bold" id="tab-2">NEWS</button>
-            <button onclick="switchTab(3)" class="tab px-6 py-3 text-sm font-bold" id="tab-3">KITS</button>
-            <button onclick="switchTab(4)" class="tab px-6 py-3 text-sm font-bold" id="tab-4">GALLERY</button>
-            <button onclick="switchTab(5)" class="tab px-6 py-3 text-sm font-bold" id="tab-5">SPONSORSHIP</button>
-        </div>
-
-        <!-- ==================== GAMES TAB (ENHANCED) ==================== -->
-        <div id="content-0" class="tab-content">
-            <h2 class="text-xl font-bold mb-4">Manage Fixtures & Live Matches</h2>
-            
-            <div class="flex gap-3 mb-6">
-                <button onclick="loadMatchesAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Matches</button>
-                <button onclick="switchToAddMatch()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Match</button>
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-800 mb-8 overflow-x-auto">
+                <button onclick="switchTab(0)" class="tab px-6 py-3 text-sm font-bold tab-active" id="tab-0">GAMES</button>
+                <button onclick="switchTab(1)" class="tab px-6 py-3 text-sm font-bold" id="tab-1">SQUAD</button>
+                <button onclick="switchTab(2)" class="tab px-6 py-3 text-sm font-bold" id="tab-2">NEWS</button>
+                <button onclick="switchTab(3)" class="tab px-6 py-3 text-sm font-bold" id="tab-3">KITS</button>
+                <button onclick="switchTab(4)" class="tab px-6 py-3 text-sm font-bold" id="tab-4">GALLERY</button>
+                <button onclick="switchTab(5)" class="tab px-6 py-3 text-sm font-bold" id="tab-5">SPONSORSHIP</button>
             </div>
 
-            <div id="admin-matches-list" class="space-y-4">
-                <!-- Matches will be loaded here -->
-            </div>
-
-            <!-- Add New Match Form -->
-            <div id="add-match-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
-                <h3 class="font-bold mb-4">Create New Match</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input id="new-home-team" placeholder="Home Team" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-                    <input id="new-away-team" placeholder="Away Team" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-                    <input id="new-competition" value="League Match" placeholder="Competition" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <!-- GAMES TAB -->
+            <div id="content-0" class="tab-content">
+                <h2 class="text-xl font-bold mb-4">Manage Fixtures & Live Matches</h2>
+                <div class="flex gap-3 mb-6">
+                    <button onclick="loadMatchesAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Matches</button>
+                    <button onclick="switchToAddMatch()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Match</button>
                 </div>
-                <button onclick="createNewMatch()" class="mt-6 w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">CREATE MATCH</button>
-                <button onclick="hideAddMatchForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                <div id="admin-matches-list" class="space-y-4"></div>
+
+                <div id="add-match-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                    <h3 class="font-bold mb-4">Create New Match</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input id="new-home-team" placeholder="Home Team" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                        <input id="new-away-team" placeholder="Away Team" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                        <input id="new-competition" value="League Match" placeholder="Competition" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    </div>
+                    <button onclick="createNewMatch()" class="mt-6 w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">CREATE MATCH</button>
+                    <button onclick="hideAddMatchForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                </div>
             </div>
-        </div>
 
+            <!-- SQUAD TAB -->
+            <div id="content-1" class="tab-content hidden">
+                <h2 class="text-xl font-bold mb-4">Manage First Team Squad</h2>
+                <div class="flex gap-3 mb-6">
+                    <button onclick="loadSquadAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Squad</button>
+                    <button onclick="switchToAddPlayer()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Player</button>
+                </div>
+                <div id="admin-squad-list" class="space-y-4"></div>
 
-
-
-        <!-- Other tabs remain unchanged -->
-       <!-- ==================== SQUAD TAB (NEW & IMPROVED) ==================== -->
-       <div id="content-1" class="tab-content">
-        <h2 class="text-xl font-bold mb-4">Manage First Team Squad</h2>
-        
-        <div class="flex gap-3 mb-6">
-            <button onclick="loadSquadAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Squad</button>
-            <button onclick="switchToAddPlayer()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Player</button>
-        </div>
-
-        <div id="admin-squad-list" class="space-y-4">
-            <!-- Players will be loaded here -->
-        </div>
-
-        <!-- Add New Player Form -->
-        <div id="add-player-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
-            <h3 class="font-bold mb-4">Add New Player</h3>
-            
-            <input id="player-name" placeholder="Player Full Name" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <div class="grid grid-cols-2 gap-4">
-                <input id="player-jersey" type="number" placeholder="Jersey Number" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-                <input id="player-position" placeholder="Position (GK, DEF, MID, FWD)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                <div id="add-player-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                    <h3 class="font-bold mb-4">Add New Player</h3>
+                    <input id="player-name" placeholder="Player Full Name" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input id="player-jersey" type="number" placeholder="Jersey Number" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                        <input id="player-position" placeholder="Position (GK, DEF, MID, FWD)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    </div>
+                    <input id="player-role" placeholder="Role" class="w-full mt-3 mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <input id="player-image" placeholder="Player Image URL" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <button onclick="createNewPlayer()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD PLAYER</button>
+                    <button onclick="hideAddPlayerForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                </div>
             </div>
-            <input id="player-role" placeholder="Role (e.g. Goalkeeper, Striker, Captain)" class="w-full mt-3 mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <input id="player-image" placeholder="Player Image URL (optional)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
 
-            <button onclick="createNewPlayer()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD PLAYER TO SQUAD</button>
-            <button onclick="hideAddPlayerForm()" class="mt-3 w-full text-slate-400">Cancel</button>
-        </div>
+            <!-- NEWS TAB -->
+            <div id="content-2" class="tab-content hidden">
+                <h2 class="text-xl font-bold mb-4">Manage Club News</h2>
+                <div class="flex gap-3 mb-6">
+                    <button onclick="loadNewsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh News</button>
+                    <button onclick="switchToAddNews()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Post</button>
+                </div>
+                <div id="admin-news-list" class="space-y-4"></div>
+
+                <div id="add-news-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                    <h3 class="font-bold mb-4">Create New News Post</h3>
+                    <input id="news-title" placeholder="News Title" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <textarea id="news-content" rows="4" placeholder="Write the full news content here..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
+                    <input id="news-image" placeholder="Image URL (optional)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <input id="news-tag" placeholder="Tag" value="UPDATE" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <button onclick="createNewNews()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">PUBLISH NEWS POST</button>
+                    <button onclick="hideAddNewsForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                </div>
+            </div>
+
+            <!-- KITS TAB -->
+            <div id="content-3" class="tab-content hidden">
+                <h2 class="text-xl font-bold mb-4">Manage Official Kits</h2>
+                <div class="flex gap-3 mb-6">
+                    <button onclick="loadKitsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Kits</button>
+                    <button onclick="switchToAddKit()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Kit</button>
+                </div>
+                <div id="admin-kits-list" class="space-y-4"></div>
+
+                <div id="add-kit-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                    <h3 class="font-bold mb-4">Add New Kit</h3>
+                    <input id="kit-title" placeholder="Kit Title" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <textarea id="kit-description" rows="4" placeholder="Description of this kit..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
+                    <input id="kit-image" placeholder="Kit Image URL" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <input id="kit-variant" placeholder="Variant" value="Home" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <button onclick="createNewKit()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD KIT</button>
+                    <button onclick="hideAddKitForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                </div>
+            </div>
+
+            <!-- GALLERY TAB -->
+            <div id="content-4" class="tab-content hidden">
+                <h2 class="text-xl font-bold mb-4">Manage Media Vault & Albums</h2>
+                <div class="flex gap-3 mb-6">
+                    <button onclick="loadAlbumsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Albums</button>
+                    <button onclick="switchToAddAlbum()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Create New Album</button>
+                </div>
+                <div id="admin-albums-list" class="space-y-6"></div>
+
+                <div id="add-album-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                    <h3 class="font-bold mb-4">Create New Album</h3>
+                    <input id="album-name" placeholder="Album Name (e.g. Matchday 12)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <button onclick="createNewAlbum()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">CREATE ALBUM</button>
+                    <button onclick="hideAddAlbumForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                </div>
+            </div>
+
+            <!-- SPONSORSHIP TAB -->
+            <div id="content-5" class="tab-content hidden">
+                <h2 class="text-xl font-bold mb-4">Manage Sponsors & Partners</h2>
+                <div class="flex gap-3 mb-6">
+                    <button onclick="loadSponsorsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Sponsors</button>
+                    <button onclick="switchToAddSponsor()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Sponsor</button>
+                </div>
+                <div id="admin-sponsors-list" class="space-y-4"></div>
+
+                <div id="add-sponsor-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                    <h3 class="font-bold mb-4">Add New Sponsor</h3>
+                    <input id="sponsor-name" placeholder="Sponsor Name" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <input id="sponsor-tier" placeholder="Tier" value="Official Partner" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <textarea id="sponsor-writeup" rows="4" placeholder="Write a short description" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
+                    <input id="sponsor-images" placeholder="Image URLs (comma separated)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <button onclick="createNewSponsor()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD SPONSOR</button>
+                    <button onclick="hideAddSponsorForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+                </div>
+            </div>
+        </main>
     </div>
 
-
-
-
-
-
-      <!-- ==================== NEWS TAB (NEW & IMPROVED) ==================== -->
-      <div id="content-2" class="tab-content">
-        <h2 class="text-xl font-bold mb-4">Manage Club News</h2>
-        
-        <div class="flex gap-3 mb-6">
-            <button onclick="loadNewsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh News</button>
-            <button onclick="switchToAddNews()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Post</button>
-        </div>
-
-        <div id="admin-news-list" class="space-y-4">
-            <!-- News posts loaded here -->
-        </div>
-
-        <!-- Add New News Form -->
-        <div id="add-news-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
-            <h3 class="font-bold mb-4">Create New News Post</h3>
-            <input id="news-title" placeholder="News Title" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <textarea id="news-content" rows="4" placeholder="Write the full news content here..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
-            <input id="news-image" placeholder="Image URL (optional)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <input id="news-tag" placeholder="Tag (e.g. MATCH, UPDATE, ANNOUNCEMENT)" value="UPDATE" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            
-            <button onclick="createNewNews()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">PUBLISH NEWS POST</button>
-            <button onclick="hideAddNewsForm()" class="mt-3 w-full text-slate-400">Cancel</button>
-        </div>
-    </div>
-
-
-
-      <!-- ==================== KITS TAB (NEW & IMPROVED) ==================== -->
-      <div id="content-3" class="tab-content">
-        <h2 class="text-xl font-bold mb-4">Manage Official Kits</h2>
-        
-        <div class="flex gap-3 mb-6">
-            <button onclick="loadKitsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Kits</button>
-            <button onclick="switchToAddKit()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Kit</button>
-        </div>
-
-        <div id="admin-kits-list" class="space-y-4">
-            <!-- Kits will be loaded here -->
-        </div>
-
-        <!-- Add New Kit Form -->
-        <div id="add-kit-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
-            <h3 class="font-bold mb-4">Add New Kit</h3>
-            
-            <input id="kit-title" placeholder="Kit Title (e.g. Home Kit 2026)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <textarea id="kit-description" rows="4" placeholder="Description of this kit..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
-            <input id="kit-image" placeholder="Kit Image URL" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <input id="kit-variant" placeholder="Variant (Home, Away, GK, Third)" value="Home" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-
-            <button onclick="createNewKit()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD KIT</button>
-            <button onclick="hideAddKitForm()" class="mt-3 w-full text-slate-400">Cancel</button>
-        </div>
-    </div>
-
-    <!-- ==================== GALLERY TAB (NEW & IMPROVED) ==================== -->
-    <div id="content-4" class="tab-content">
-        <h2 class="text-xl font-bold mb-4">Manage Media Vault & Albums</h2>
-        
-        <div class="flex gap-3 mb-6">
-            <button onclick="loadAlbumsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Albums</button>
-            <button onclick="switchToAddAlbum()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Create New Album</button>
-        </div>
-
-        <div id="admin-albums-list" class="space-y-6">
-            <!-- Albums + Add Image forms will load here -->
-        </div>
-
-        <!-- Add New Album Form -->
-        <div id="add-album-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
-            <h3 class="font-bold mb-4">Create New Album</h3>
-            <input id="album-name" placeholder="Album Name (e.g. Matchday 12)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <button onclick="createNewAlbum()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">CREATE ALBUM</button>
-            <button onclick="hideAddAlbumForm()" class="mt-3 w-full text-slate-400">Cancel</button>
-        </div>
-    </div>
-
-    <!-- ==================== SPONSORSHIP TAB (NEW & IMPROVED) ==================== -->
-        <div id="content-5" class="tab-content">
-            <h2 class="text-xl font-bold mb-4">Manage Sponsors & Partners</h2>
-            
-            <div class="flex gap-3 mb-6">
-                <button onclick="loadSponsorsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Sponsors</button>
-                <button onclick="switchToAddSponsor()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Sponsor</button>
-            </div>
-
-            <div id="admin-sponsors-list" class="space-y-4">
-                <!-- Sponsors loaded here -->
-            </div>
-
-            <!-- Add New Sponsor Form -->
-            <div id="add-sponsor-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
-                <h3 class="font-bold mb-4">Add New Sponsor</h3>
-                
-                <input id="sponsor-name" placeholder="Sponsor Name (e.g. Zenith Bank)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-                <input id="sponsor-tier" placeholder="Tier (e.g. Official Partner, Platinum, Gold)" value="Official Partner" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-                <textarea id="sponsor-writeup" rows="4" placeholder="Write a short description about this sponsor..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
-                <input id="sponsor-images" placeholder="Image URLs (comma separated)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-
-                <button onclick="createNewSponsor()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD SPONSOR</button>
-                <button onclick="hideAddSponsorForm()" class="mt-3 w-full text-slate-400">Cancel</button>
-            </div>
-        </div>
-    </main>
-
+    <script src="config.js"></script>
     <script>
       const SUPABASE_URL = "https://mddlkobjiquicopymipy.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
