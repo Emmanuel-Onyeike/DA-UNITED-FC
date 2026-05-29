@@ -175,20 +175,20 @@
                     </div>
                 </div>
 
-                <!-- Scorers -->
+<!-- Scorers -->
                 <div class="grid grid-cols-2 border-t border-slate-800 text-xs">
                     <div class="p-4 border-r border-slate-800 home-scorers">
-                        ${renderScorers(match.home_scorers || [])}
+                        ${renderScorers(typeof match.home_scorers === 'string' ? JSON.parse(match.home_scorers || '[]') : (match.home_scorers || []))}
                     </div>
                     <div class="p-4 away-scorers">
-                        ${renderScorers(match.away_scorers || [])}
+                        ${renderScorers(typeof match.away_scorers === 'string' ? JSON.parse(match.away_scorers || '[]') : (match.away_scorers || []))}
                     </div>
                 </div>
 
                 <!-- Cards -->
                 <div class="grid grid-cols-2 border-t border-slate-800 text-xs p-4 gap-4">
-                    <div class="home-cards">${renderCards(match.home_cards || [])}</div>
-                    <div class="away-cards text-right">${renderCards(match.away_cards || [])}</div>
+                    <div class="home-cards">${renderCards(typeof match.home_cards === 'string' ? JSON.parse(match.home_cards || '[]') : (match.home_cards || []))}</div>
+                    <div class="away-cards text-right">${renderCards(typeof match.away_cards === 'string' ? JSON.parse(match.away_cards || '[]') : (match.away_cards || []))}</div>
                 </div>
             `;
             return div;
