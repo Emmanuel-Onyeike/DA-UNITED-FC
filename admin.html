@@ -132,7 +132,7 @@
             <!-- Players will be loaded here -->
         </div>
 
-        <!-- Add New Player Form -->
+<!-- Add New Player Form -->
         <div id="add-player-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
             <h3 class="font-bold mb-4">Add New Player</h3>
             
@@ -142,8 +142,16 @@
                 <input id="player-position" placeholder="Position (GK, DEF, MID, FWD)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
             </div>
             <input id="player-role" placeholder="Role (e.g. Goalkeeper, Striker, Captain)" class="w-full mt-3 mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
-            <input id="player-image" placeholder="Player Image URL (optional)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            
+            <!-- File Upload for Player Image -->
+            <div class="mb-4">
+                <label class="text-xs text-slate-400 mb-2 block">Player Image (Upload)</label>
+                <input type="file" id="player-image-file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyan-500 file:text-black hover:file:bg-cyan-400">
+                <input id="player-image" placeholder="Or enter Image URL" class="w-full mt-2 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
+            </div>
 
+            <button onclick="uploadPlayerImage()" class="w-full bg-cyan-600 text-white py-2 rounded-xl text-xs font-bold mb-2">Upload Image First</button>
+            <p id="player-upload-status" class="text-xs text-cyan-400 mb-3 hidden">✓ Image uploaded! Click Add Player to save.</p>
             <button onclick="createNewPlayer()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD PLAYER TO SQUAD</button>
             <button onclick="hideAddPlayerForm()" class="mt-3 w-full text-slate-400">Cancel</button>
         </div>
@@ -167,12 +175,22 @@
             <!-- News posts loaded here -->
         </div>
 
-        <!-- Add New News Form -->
+<!-- Add New News Form -->
         <div id="add-news-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
             <h3 class="font-bold mb-4">Create New News Post</h3>
             <input id="news-title" placeholder="News Title" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
             <textarea id="news-content" rows="4" placeholder="Write the full news content here..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
-            <input id="news-image" placeholder="Image URL (optional)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            
+            <!-- File Upload for News Image -->
+            <div class="mb-4">
+                <label class="text-xs text-slate-400 mb-2 block">News Image (Upload)</label>
+                <input type="file" id="news-image-file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyan-500 file:text-black hover:file:bg-cyan-400">
+                <input id="news-image" placeholder="Or enter Image URL" class="w-full mt-2 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
+            </div>
+            
+            <button onclick="uploadNewsImage()" class="w-full bg-cyan-600 text-white py-2 rounded-xl text-xs font-bold mb-2">Upload Image First</button>
+            <p id="news-upload-status" class="text-xs text-cyan-400 mb-3 hidden">✓ Image uploaded!</p>
+            
             <input id="news-tag" placeholder="Tag (e.g. MATCH, UPDATE, ANNOUNCEMENT)" value="UPDATE" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
             
             <button onclick="createNewNews()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">PUBLISH NEWS POST</button>
@@ -195,13 +213,23 @@
             <!-- Kits will be loaded here -->
         </div>
 
-        <!-- Add New Kit Form -->
+<!-- Add New Kit Form -->
         <div id="add-kit-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
             <h3 class="font-bold mb-4">Add New Kit</h3>
             
             <input id="kit-title" placeholder="Kit Title (e.g. Home Kit 2026)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
             <textarea id="kit-description" rows="4" placeholder="Description of this kit..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
-            <input id="kit-image" placeholder="Kit Image URL" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            
+            <!-- File Upload for Kit Image -->
+            <div class="mb-4">
+                <label class="text-xs text-slate-400 mb-2 block">Kit Image (Upload)</label>
+                <input type="file" id="kit-image-file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyan-500 file:text-black hover:file:bg-cyan-400">
+                <input id="kit-image" placeholder="Or enter Image URL" class="w-full mt-2 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm">
+            </div>
+            
+            <button onclick="uploadKitImage()" class="w-full bg-cyan-600 text-white py-2 rounded-xl text-xs font-bold mb-2">Upload Kit Image First</button>
+            <p id="kit-upload-status" class="text-xs text-cyan-400 mb-3 hidden">✓ Kit image uploaded!</p>
+            
             <input id="kit-variant" placeholder="Variant (Home, Away, GK, Third)" value="Home" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
 
             <button onclick="createNewKit()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD KIT</button>
@@ -260,8 +288,9 @@
     </main>
 
     <script>
-      const SUPABASE_URL = "https://mddlkobjiquicopymipy.supabase.co";
+        const SUPABASE_URL = "https://mddlkobjiquicopymipy.supabase.co";
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
+        let uploadedImageUrl = '';
 
         // Obfuscated PIN (not directly visible as 123789)
         const realPin = "ms4sbfb".split('').reverse().join('').replace(/[a-z]/gi, '') + "789123".split('').reverse().join('').slice(3);
@@ -318,7 +347,7 @@
                     return;
                 }
 
-                let html = '';
+let html = '';
                 albums.forEach(album => {
                     const mediaCount = album.media ? album.media.length : 0;
                     html += `
@@ -329,6 +358,13 @@
                                     <span class="text-xs text-slate-400">${mediaCount} images</span>
                                 </div>
                                 <button onclick="showAddImageForm('${album.id}')" class="text-xs bg-cyan-600 hover:bg-cyan-500 px-4 py-2 rounded">+ Add Image</button>
+                            </div>
+                            <!-- Hidden Add Image Form -->
+                            <div id="add-image-form-${album.id}" class="hidden mt-4 p-4 bg-slate-900 rounded-xl">
+                                <input type="file" id="gallery-image-file-${album.id}" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-cyan-500 file:text-black mb-2">
+                                <input id="gallery-image-title-${album.id}" placeholder="Image Title" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-sm mb-2">
+                                <button onclick="uploadGalleryImage('${album.id}')" class="w-full bg-cyan-600 text-white py-2 rounded-xl text-xs font-bold">Upload Image</button>
+                                <button onclick="hideAddImageForm('${album.id}')" class="mt-2 w-full text-slate-400 text-xs">Cancel</button>
                             </div>
                         </div>`;
                 });
@@ -368,27 +404,59 @@
             }
         }
 
-        // Simple alert for adding image (you can expand later)
+// Show add image form for album
         function showAddImageForm(albumId) {
-            const url = prompt("Enter Image URL:");
-            const title = prompt("Enter Image Title:");
-            if (url && title) {
-                fetch(`${SUPABASE_URL}/rest/v1/media`, {
+            document.getElementById(`add-image-form-${albumId}`).classList.remove('hidden');
+        }
+        
+        function hideAddImageForm(albumId) {
+            document.getElementById(`add-image-form-${albumId}`).classList.add('hidden');
+        }
+        
+        // Upload gallery image to Supabase Storage
+        async function uploadGalleryImage(albumId) {
+            const fileInput = document.getElementById(`gallery-image-file-${albumId}`);
+            const file = fileInput.files[0];
+            const title = document.getElementById(`gallery-image-title-${albumId}`).value.trim();
+            
+            if (!file) return triggerAlert("Please select an image file first!");
+            if (!title) return triggerAlert("Please enter an image title!");
+            
+            try {
+                const fileName = `gallery/${Date.now()}_${file.name}`;
+                const res = await fetch(`${SUPABASE_URL}/storage/v1/object/da-united/${fileName}`, {
                     method: 'POST',
                     headers: {
                         "apikey": SUPABASE_KEY,
                         "Authorization": `Bearer ${SUPABASE_KEY}`,
-                        "Content-Type": "application/json"
+                        "Content-Type": file.type
                     },
-                    body: JSON.stringify({
-                        album_id: albumId,
-                        title: title,
-                        image_url: url
-                    })
-                }).then(() => {
-                    triggerAlert("Image added to album!");
-                    loadAlbumsAdmin();
+                    body: file
                 });
+                
+                if (res.ok) {
+                    const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/da-united/${fileName}`;
+                    // Save to media table
+                    await fetch(`${SUPABASE_URL}/rest/v1/media`, {
+                        method: 'POST',
+                        headers: {
+                            "apikey": SUPABASE_KEY,
+                            "Authorization": `Bearer ${SUPABASE_KEY}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            album_id: albumId,
+                            title: title,
+                            image_url: imageUrl
+                        })
+                    });
+                    triggerAlert("✅ Image added to album!");
+                    loadAlbumsAdmin();
+                } else {
+                    throw new Error("Upload failed");
+                }
+            } catch (e) {
+                triggerAlert("Failed to upload image.");
             }
         }
 
@@ -441,8 +509,43 @@
             document.getElementById('add-player-form').classList.remove('hidden');
         }
 
-        function hideAddPlayerForm() {
+function hideAddPlayerForm() {
             document.getElementById('add-player-form').classList.add('hidden');
+            uploadedImageUrl = '';
+            document.getElementById('player-image').value = '';
+            document.getElementById('player-image-file').value = '';
+            document.getElementById('player-upload-status').classList.add('hidden');
+        }
+
+        // Upload player image to Supabase Storage
+        async function uploadPlayerImage() {
+            const fileInput = document.getElementById('player-image-file');
+            const file = fileInput.files[0];
+            if (!file) return triggerAlert("Please select an image file first!");
+            
+            try {
+                const fileName = `players/${Date.now()}_${file.name}`;
+                const res = await fetch(`${SUPABASE_URL}/storage/v1/object/da-united/${fileName}`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": file.type
+                    },
+                    body: file
+                });
+                
+                if (res.ok) {
+                    uploadedImageUrl = `${SUPABASE_URL}/storage/v1/object/public/da-united/${fileName}`;
+                    document.getElementById('player-image').value = uploadedImageUrl;
+                    document.getElementById('player-upload-status').classList.remove('hidden');
+                    triggerAlert("✅ Image uploaded successfully!");
+                } else {
+                    throw new Error("Upload failed");
+                }
+            } catch (e) {
+                triggerAlert("Failed to upload image. Using URL instead.");
+            }
         }
 
         async function createNewPlayer() {
@@ -617,8 +720,42 @@ async function loadNewsAdmin() {
             document.getElementById('add-news-form').classList.remove('hidden');
         }
 
-        function hideAddNewsForm() {
+function hideAddNewsForm() {
             document.getElementById('add-news-form').classList.add('hidden');
+            document.getElementById('news-image').value = '';
+            document.getElementById('news-image-file').value = '';
+            document.getElementById('news-upload-status').classList.add('hidden');
+        }
+
+        // Upload news image to Supabase Storage
+        async function uploadNewsImage() {
+            const fileInput = document.getElementById('news-image-file');
+            const file = fileInput.files[0];
+            if (!file) return triggerAlert("Please select an image file first!");
+            
+            try {
+                const fileName = `news/${Date.now()}_${file.name}`;
+                const res = await fetch(`${SUPABASE_URL}/storage/v1/object/da-united/${fileName}`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": file.type
+                    },
+                    body: file
+                });
+                
+                if (res.ok) {
+                    const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/da-united/${fileName}`;
+                    document.getElementById('news-image').value = imageUrl;
+                    document.getElementById('news-upload-status').classList.remove('hidden');
+                    triggerAlert("✅ News image uploaded!");
+                } else {
+                    throw new Error("Upload failed");
+                }
+            } catch (e) {
+                triggerAlert("Failed to upload image.");
+            }
         }
 
         async function createNewNews() {
@@ -703,8 +840,42 @@ async function loadNewsAdmin() {
             document.getElementById('add-kit-form').classList.remove('hidden');
         }
 
-        function hideAddKitForm() {
+function hideAddKitForm() {
             document.getElementById('add-kit-form').classList.add('hidden');
+            document.getElementById('kit-image').value = '';
+            document.getElementById('kit-image-file').value = '';
+            document.getElementById('kit-upload-status').classList.add('hidden');
+        }
+
+        // Upload kit image to Supabase Storage
+        async function uploadKitImage() {
+            const fileInput = document.getElementById('kit-image-file');
+            const file = fileInput.files[0];
+            if (!file) return triggerAlert("Please select an image file first!");
+            
+            try {
+                const fileName = `kits/${Date.now()}_${file.name}`;
+                const res = await fetch(`${SUPABASE_URL}/storage/v1/object/da-united/${fileName}`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": file.type
+                    },
+                    body: file
+                });
+                
+                if (res.ok) {
+                    const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/da-united/${fileName}`;
+                    document.getElementById('kit-image').value = imageUrl;
+                    document.getElementById('kit-upload-status').classList.remove('hidden');
+                    triggerAlert("✅ Kit image uploaded!");
+                } else {
+                    throw new Error("Upload failed");
+                }
+            } catch (e) {
+                triggerAlert("Failed to upload image.");
+            }
         }
 
         async function createNewKit() {
@@ -768,8 +939,13 @@ async function loadNewsAdmin() {
                     return;
                 }
 
-                let html = '';
+let html = '';
                 matches.forEach(m => {
+                    const homeScorers = m.home_scorers ? JSON.parse(m.home_scorers) : [];
+                    const awayScorers = m.away_scorers ? JSON.parse(m.away_scorers) : [];
+                    const homeCards = m.home_cards ? JSON.parse(m.home_cards) : [];
+                    const awayCards = m.away_cards ? JSON.parse(m.away_cards) : [];
+                    
                     html += `
                         <div class="tactical-card p-5 rounded-2xl">
                             <div class="flex justify-between items-center">
@@ -780,13 +956,76 @@ async function loadNewsAdmin() {
                                 <div class="text-right">
                                     <span class="text-2xl font-black">${m.home_score} - ${m.away_score}</span><br>
                                     <span class="text-cyan-400 text-sm">${m.time_display || '00:00'}</span>
+                                    <span class="text-xs ml-2 ${m.status === 'LIVE' ? 'text-red-400 animate-pulse' : 'text-slate-400'}">[${m.status}]</span>
                                 </div>
                             </div>
+                            
+                            <!-- Match Controls -->
                             <div class="mt-4 flex gap-2 flex-wrap">
-                                <button onclick="updateMatchStatus('${m.id}', 'LIVE')" class="text-xs px-4 py-2 bg-green-600 rounded">Start Live</button>
-                                <button onclick="updateMatchStatus('${m.id}', 'HT')" class="text-xs px-4 py-2 bg-amber-600 rounded">HT</button>
+                                <button onclick="updateMatchStatus('${m.id}', 'LIVE')" class="text-xs px-4 py-2 bg-green-600 rounded">Kick Off</button>
+                                <button onclick="updateMatchStatus('${m.id}', 'HT')" class="text-xs px-4 py-2 bg-amber-600 rounded">Half Time</button>
                                 <button onclick="updateMatchStatus('${m.id}', 'SECOND_HALF')" class="text-xs px-4 py-2 bg-blue-600 rounded">2nd Half</button>
                                 <button onclick="updateMatchStatus('${m.id}', 'FT')" class="text-xs px-4 py-2 bg-red-600 rounded">Full Time</button>
+                            </div>
+                            
+                            <!-- Goal Scorers -->
+                            <div class="mt-4 p-3 bg-slate-900 rounded-xl">
+                                <h5 class="text-xs font-bold text-cyan-400 mb-2">Goal Scorers</h5>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div>
+                                        <span class="text-slate-500">${m.home_team}:</span>
+                                        ${homeScorers.length > 0 ? homeScorers.map(s => `<div class="text-white">${s.player} (${s.minute}') ${s.type ? '['+s.type+']' : ''}</div>`).join('') : '<span class="text-slate-600">No goals</span>'}
+                                        <button onclick="showAddGoalForm('${m.id}', 'home')" class="mt-2 text-xs bg-cyan-700 px-2 py-1 rounded">+ Add Goal</button>
+                                    </div>
+                                    <div>
+                                        <span class="text-slate-500">${m.away_team}:</span>
+                                        ${awayScorers.length > 0 ? awayScorers.map(s => `<div class="text-white">${s.player} (${s.minute}') ${s.type ? '['+s.type+']' : ''}</div>`).join('') : '<span class="text-slate-600">No goals</span>'}
+                                        <button onclick="showAddGoalForm('${m.id}', 'away')" class="mt-2 text-xs bg-cyan-700 px-2 py-1 rounded">+ Add Goal</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cards -->
+                            <div class="mt-3 p-3 bg-slate-900 rounded-xl">
+                                <h5 class="text-xs font-bold text-amber-400 mb-2">Cards</h5>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div>
+                                        ${homeCards.length > 0 ? homeCards.map(c => `<div class="inline-block px-2 py-0.5 rounded mr-1 mb-1 ${c.color === 'red' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}">${c.player} (${c.minute}')</div>`).join('') : '<span class="text-slate-600">No cards</span>'}
+                                        <button onclick="showAddCardForm('${m.id}', 'home')" class="mt-2 text-xs bg-amber-700 px-2 py-1 rounded">+ Add Card</button>
+                                    </div>
+                                    <div>
+                                        ${awayCards.length > 0 ? awayCards.map(c => `<div class="inline-block px-2 py-0.5 rounded mr-1 mb-1 ${c.color === 'red' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}">${c.player} (${c.minute}')</div>`).join('') : '<span class="text-slate-600">No cards</span>'}
+                                        <button onclick="showAddCardForm('${m.id}', 'away')" class="mt-2 text-xs bg-amber-700 px-2 py-1 rounded">+ Add Card</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Add Goal Form (Hidden) -->
+                            <div id="goal-form-${m.id}" class="hidden mt-3 p-3 bg-slate-800 rounded-xl">
+                                <input id="goal-player-${m.id}" placeholder="Player Name" class="w-full mb-2 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm">
+                                <input id="goal-minute-${m.id}" placeholder="Minute (e.g. 45)" type="number" class="w-full mb-2 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm">
+                                <select id="goal-type-${m.id}" class="w-full mb-2 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm">
+                                    <option value="">Regular Goal</option>
+                                    <option value="penalty">Penalty</option>
+                                    <option value="free_kick">Free Kick</option>
+                                    <option value="own_goal">Own Goal</option>
+                                </select>
+                                <input id="goal-team-${m.id}" type="hidden" value="">
+                                <button onclick="addGoalScorer('${m.id}')" class="w-full bg-green-600 text-white py-2 rounded text-xs font-bold">Add Goal</button>
+                                <button onclick="hideAddGoalForm('${m.id}')" class="mt-2 w-full text-slate-400 text-xs">Cancel</button>
+                            </div>
+                            
+                            <!-- Add Card Form (Hidden) -->
+                            <div id="card-form-${m.id}" class="hidden mt-3 p-3 bg-slate-800 rounded-xl">
+                                <input id="card-player-${m.id}" placeholder="Player Name" class="w-full mb-2 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm">
+                                <input id="card-minute-${m.id}" placeholder="Minute" type="number" class="w-full mb-2 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm">
+                                <select id="card-color-${m.id}" class="w-full mb-2 bg-slate-900 border border-slate-700 rounded px-3 py-2 text-sm">
+                                    <option value="yellow">Yellow Card</option>
+                                    <option value="red">Red Card</option>
+                                </select>
+                                <input id="card-team-${m.id}" type="hidden" value="">
+                                <button onclick="addCard('${m.id}')" class="w-full bg-amber-600 text-white py-2 rounded text-xs font-bold">Add Card</button>
+                                <button onclick="hideAddCardForm('${m.id}')" class="mt-2 w-full text-slate-400 text-xs">Cancel</button>
                             </div>
                         </div>`;
                 });
@@ -796,7 +1035,7 @@ async function loadNewsAdmin() {
             }
         }
 
-        async function updateMatchStatus(id, status) {
+async function updateMatchStatus(id, status) {
             let time = status === 'HT' ? 'HT' : status === 'FT' ? 'FT' : status === 'SECOND_HALF' ? '46:00' : '00:00';
             try {
                 await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${id}`, {
@@ -812,6 +1051,129 @@ async function loadNewsAdmin() {
                 loadMatchesAdmin();
             } catch (e) {
                 triggerAlert("Failed to update status");
+            }
+        }
+
+        // Show goal form
+        function showAddGoalForm(matchId, team) {
+            document.getElementById(`goal-form-${matchId}`).classList.remove('hidden');
+            document.getElementById(`goal-team-${matchId}`).value = team;
+        }
+        
+        function hideAddGoalForm(matchId) {
+            document.getElementById(`goal-form-${matchId}`).classList.add('hidden');
+        }
+
+        // Add goal scorer
+        async function addGoalScorer(matchId) {
+            const player = document.getElementById(`goal-player-${matchId}`).value.trim();
+            const minute = document.getElementById(`goal-minute-${matchId}`).value;
+            const goalType = document.getElementById(`goal-type-${matchId}`).value;
+            const team = document.getElementById(`goal-team-${matchId}`).value;
+            
+            if (!player || !minute) return triggerAlert("Player name and minute required!");
+            
+            try {
+                // Get current match data
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${matchId}`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const matches = await res.json();
+                const match = matches[0];
+                
+                const newGoal = { player, minute: parseInt(minute), type: goalType };
+                let homeScorers = match.home_scorers ? JSON.parse(match.home_scorers) : [];
+                let awayScorers = match.away_scorers ? JSON.parse(match.away_scorers) : [];
+                let homeScore = match.home_score || 0;
+                let awayScore = match.away_score || 0;
+                
+                if (team === 'home') {
+                    homeScorers.push(newGoal);
+                    homeScore++;
+                } else {
+                    awayScorers.push(newGoal);
+                    awayScore++;
+                }
+                
+                await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${matchId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        home_scorers: JSON.stringify(homeScorers),
+                        away_scorers: JSON.stringify(awayScorers),
+                        home_score: homeScore,
+                        away_score: awayScore,
+                        status: 'LIVE'
+                    })
+                });
+                
+                triggerAlert("✅ Goal added!");
+                hideAddGoalForm(matchId);
+                loadMatchesAdmin();
+            } catch (e) {
+                triggerAlert("Failed to add goal");
+            }
+        }
+
+        // Show card form
+        function showAddCardForm(matchId, team) {
+            document.getElementById(`card-form-${matchId}`).classList.remove('hidden');
+            document.getElementById(`card-team-${matchId}`).value = team;
+        }
+        
+        function hideAddCardForm(matchId) {
+            document.getElementById(`card-form-${matchId}`).classList.add('hidden');
+        }
+
+        // Add card
+        async function addCard(matchId) {
+            const player = document.getElementById(`card-player-${matchId}`).value.trim();
+            const minute = document.getElementById(`card-minute-${matchId}`).value;
+            const color = document.getElementById(`card-color-${matchId}`).value;
+            const team = document.getElementById(`card-team-${matchId}`).value;
+            
+            if (!player || !minute) return triggerAlert("Player name and minute required!");
+            
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${matchId}`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const matches = await res.json();
+                const match = matches[0];
+                
+                const newCard = { player, minute: parseInt(minute), color };
+                let homeCards = match.home_cards ? JSON.parse(match.home_cards) : [];
+                let awayCards = match.away_cards ? JSON.parse(match.away_cards) : [];
+                
+                if (team === 'home') {
+                    homeCards.push(newCard);
+                } else {
+                    awayCards.push(newCard);
+                }
+                
+                await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${matchId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        home_cards: JSON.stringify(homeCards),
+                        away_cards: JSON.stringify(awayCards),
+                        status: 'LIVE'
+                    })
+                });
+                
+                triggerAlert(`✅ ${color === 'red' ? 'Red' : 'Yellow'} card added!`);
+                hideAddCardForm(matchId);
+                loadMatchesAdmin();
+            } catch (e) {
+                triggerAlert("Failed to add card");
             }
         }
 
