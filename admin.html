@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.A UNITED | Admin HQ</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .tactical-card { background: rgba(10, 15, 26, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0, 210, 255, 0.1); }
+        .electric-text { color: #00d2ff; text-shadow: 0 0 15px rgba(0, 210, 255, 0.4); }
+        .tab-active { border-bottom: 3px solid #00d2ff; color: #00d2ff; }
+    </style>
+</head>
+<body class="bg-[#080C14] text-gray-100 font-sans antialiased">
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="tactical-card p-6 rounded-xl max-w-sm w-full">
+            <h3 class="text-cyan-400 font-mono uppercase text-sm mb-2">SYSTEM ALERT</h3>
+            <p id="modal-text" class="text-slate-300 font-mono text-sm leading-relaxed"></p>
+            <button onclick="closeModal()" class="mt-6 w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3 rounded font-bold text-xs tracking-widest">ACKNOWLEDGE</button>
+        </div>
+    </div>
+
+    <nav class="border-b border-slate-800 bg-[#080C14]/90 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="IMG_5489.PNG" class="w-10 h-10 object-contain" alt="Crest">
+                <div class="font-black text-2xl">ADMIN <span class="electric-text">HQ</span></div>
+            </div>
+            <button onclick="triggerAlert('Session terminated')" class="text-xs px-5 py-2 border border-red-500/30 text-red-400 rounded hover:bg-red-950">LOGOUT</button>
+        </div>
+    </nav>
+
+    <!-- PIN LOGIN MODAL -->
+    <div id="pin-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md">
+        <div class="tactical-card p-8 rounded-2xl max-w-xs w-full text-center">
+            <h2 class="text-xl font-bold mb-6">ADMIN ACCESS</h2>
+            <p class="text-xs text-slate-400 mb-4">Enter Security PIN</p>
+            
+            <input 
+                id="pin-input" 
+                type="password" 
+                maxlength="6" 
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-5 py-4 text-center text-2xl tracking-widest focus:outline-none focus:border-cyan-500"
+                placeholder="••••••"
+                onkeypress="if(event.key === 'Enter') verifyPin()">
+            
+            <button onclick="verifyPin()" class="mt-6 w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3.5 rounded-xl font-bold">VERIFY ACCESS</button>
+            
+            <p id="pin-error" class="text-red-400 text-xs mt-4 hidden">Invalid PIN</p>
+        </div>
+    </div>
+
+    <!-- Main Admin Content (Hidden until PIN is correct) -->
+    <div id="main-admin" class="hidden">
+
+        <!-- Modal -->
+        <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm">
+            <div class="tactical-card p-6 rounded-xl max-w-sm w-full">
+                <h3 class="text-cyan-400 font-mono uppercase text-sm mb-2">SYSTEM ALERT</h3>
+                <p id="modal-text" class="text-slate-300 font-mono text-sm leading-relaxed"></p>
+                <button onclick="closeModal()" class="mt-6 w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3 rounded font-bold text-xs tracking-widest">ACKNOWLEDGE</button>
+            </div>
+        </div>
+
+        <nav class="border-b border-slate-800 bg-[#080C14]/90 sticky top-0 z-40 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="IMG_5489.PNG" class="w-10 h-10 object-contain" alt="Crest">
+                    <div class="font-black text-2xl">ADMIN <span class="electric-text">HQ</span></div>
+                </div>
+                <button onclick="triggerAlert('Session terminated')" class="text-xs px-5 py-2 border border-red-500/30 text-red-400 rounded hover:bg-red-950">LOGOUT</button>
+            </div>
+        </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        <h1 class="text-4xl font-black mb-1">OVERWATCH CONTROL</h1>
+        <p class="text-slate-400 mb-8">Manage all live sections from one command center</p>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-slate-800 mb-8 overflow-x-auto">
+            <button onclick="switchTab(0)" class="tab px-6 py-3 text-sm font-bold tab-active" id="tab-0">GAMES</button>
+            <button onclick="switchTab(1)" class="tab px-6 py-3 text-sm font-bold" id="tab-1">SQUAD</button>
+            <button onclick="switchTab(2)" class="tab px-6 py-3 text-sm font-bold" id="tab-2">NEWS</button>
+            <button onclick="switchTab(3)" class="tab px-6 py-3 text-sm font-bold" id="tab-3">KITS</button>
+            <button onclick="switchTab(4)" class="tab px-6 py-3 text-sm font-bold" id="tab-4">GALLERY</button>
+            <button onclick="switchTab(5)" class="tab px-6 py-3 text-sm font-bold" id="tab-5">SPONSORSHIP</button>
+        </div>
+
+        <!-- ==================== GAMES TAB (ENHANCED) ==================== -->
+        <div id="content-0" class="tab-content">
+            <h2 class="text-xl font-bold mb-4">Manage Fixtures & Live Matches</h2>
+            
+            <div class="flex gap-3 mb-6">
+                <button onclick="loadMatchesAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Matches</button>
+                <button onclick="switchToAddMatch()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Match</button>
+            </div>
+
+            <div id="admin-matches-list" class="space-y-4">
+                <!-- Matches will be loaded here -->
+            </div>
+
+            <!-- Add New Match Form -->
+            <div id="add-match-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                <h3 class="font-bold mb-4">Create New Match</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input id="new-home-team" placeholder="Home Team" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <input id="new-away-team" placeholder="Away Team" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                    <input id="new-competition" value="League Match" placeholder="Competition" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                </div>
+                <button onclick="createNewMatch()" class="mt-6 w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">CREATE MATCH</button>
+                <button onclick="hideAddMatchForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+            </div>
+        </div>
+
+
+
+
+        <!-- Other tabs remain unchanged -->
+       <!-- ==================== SQUAD TAB (NEW & IMPROVED) ==================== -->
+       <div id="content-1" class="tab-content">
+        <h2 class="text-xl font-bold mb-4">Manage First Team Squad</h2>
+        
+        <div class="flex gap-3 mb-6">
+            <button onclick="loadSquadAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Squad</button>
+            <button onclick="switchToAddPlayer()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Player</button>
+        </div>
+
+        <div id="admin-squad-list" class="space-y-4">
+            <!-- Players will be loaded here -->
+        </div>
+
+        <!-- Add New Player Form -->
+        <div id="add-player-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+            <h3 class="font-bold mb-4">Add New Player</h3>
+            
+            <input id="player-name" placeholder="Player Full Name" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <div class="grid grid-cols-2 gap-4">
+                <input id="player-jersey" type="number" placeholder="Jersey Number" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                <input id="player-position" placeholder="Position (GK, DEF, MID, FWD)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            </div>
+            <input id="player-role" placeholder="Role (e.g. Goalkeeper, Striker, Captain)" class="w-full mt-3 mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <input id="player-image" placeholder="Player Image URL (optional)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+
+            <button onclick="createNewPlayer()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD PLAYER TO SQUAD</button>
+            <button onclick="hideAddPlayerForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+
+
+
+
+
+      <!-- ==================== NEWS TAB (NEW & IMPROVED) ==================== -->
+      <div id="content-2" class="tab-content">
+        <h2 class="text-xl font-bold mb-4">Manage Club News</h2>
+        
+        <div class="flex gap-3 mb-6">
+            <button onclick="loadNewsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh News</button>
+            <button onclick="switchToAddNews()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Post</button>
+        </div>
+
+        <div id="admin-news-list" class="space-y-4">
+            <!-- News posts loaded here -->
+        </div>
+
+        <!-- Add New News Form -->
+        <div id="add-news-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+            <h3 class="font-bold mb-4">Create New News Post</h3>
+            <input id="news-title" placeholder="News Title" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <textarea id="news-content" rows="4" placeholder="Write the full news content here..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
+            <input id="news-image" placeholder="Image URL (optional)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <input id="news-tag" placeholder="Tag (e.g. MATCH, UPDATE, ANNOUNCEMENT)" value="UPDATE" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            
+            <button onclick="createNewNews()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">PUBLISH NEWS POST</button>
+            <button onclick="hideAddNewsForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+
+
+      <!-- ==================== KITS TAB (NEW & IMPROVED) ==================== -->
+      <div id="content-3" class="tab-content">
+        <h2 class="text-xl font-bold mb-4">Manage Official Kits</h2>
+        
+        <div class="flex gap-3 mb-6">
+            <button onclick="loadKitsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Kits</button>
+            <button onclick="switchToAddKit()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Kit</button>
+        </div>
+
+        <div id="admin-kits-list" class="space-y-4">
+            <!-- Kits will be loaded here -->
+        </div>
+
+        <!-- Add New Kit Form -->
+        <div id="add-kit-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+            <h3 class="font-bold mb-4">Add New Kit</h3>
+            
+            <input id="kit-title" placeholder="Kit Title (e.g. Home Kit 2026)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <textarea id="kit-description" rows="4" placeholder="Description of this kit..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
+            <input id="kit-image" placeholder="Kit Image URL" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <input id="kit-variant" placeholder="Variant (Home, Away, GK, Third)" value="Home" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+
+            <button onclick="createNewKit()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD KIT</button>
+            <button onclick="hideAddKitForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+    <!-- ==================== GALLERY TAB (NEW & IMPROVED) ==================== -->
+    <div id="content-4" class="tab-content">
+        <h2 class="text-xl font-bold mb-4">Manage Media Vault & Albums</h2>
+        
+        <div class="flex gap-3 mb-6">
+            <button onclick="loadAlbumsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Albums</button>
+            <button onclick="switchToAddAlbum()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Create New Album</button>
+        </div>
+
+        <div id="admin-albums-list" class="space-y-6">
+            <!-- Albums + Add Image forms will load here -->
+        </div>
+
+        <!-- Add New Album Form -->
+        <div id="add-album-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+            <h3 class="font-bold mb-4">Create New Album</h3>
+            <input id="album-name" placeholder="Album Name (e.g. Matchday 12)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+            <button onclick="createNewAlbum()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">CREATE ALBUM</button>
+            <button onclick="hideAddAlbumForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+    <!-- ==================== SPONSORSHIP TAB (NEW & IMPROVED) ==================== -->
+        <div id="content-5" class="tab-content">
+            <h2 class="text-xl font-bold mb-4">Manage Sponsors & Partners</h2>
+            
+            <div class="flex gap-3 mb-6">
+                <button onclick="loadSponsorsAdmin()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-xl text-sm">Refresh Sponsors</button>
+                <button onclick="switchToAddSponsor()" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2 rounded-xl text-sm font-bold">+ Add New Sponsor</button>
+            </div>
+
+            <div id="admin-sponsors-list" class="space-y-4">
+                <!-- Sponsors loaded here -->
+            </div>
+
+            <!-- Add New Sponsor Form -->
+            <div id="add-sponsor-form" class="tactical-card p-6 rounded-2xl mt-8 hidden">
+                <h3 class="font-bold mb-4">Add New Sponsor</h3>
+                
+                <input id="sponsor-name" placeholder="Sponsor Name (e.g. Zenith Bank)" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                <input id="sponsor-tier" placeholder="Tier (e.g. Official Partner, Platinum, Gold)" value="Official Partner" class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+                <textarea id="sponsor-writeup" rows="4" placeholder="Write a short description about this sponsor..." class="w-full mb-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3"></textarea>
+                <input id="sponsor-images" placeholder="Image URLs (comma separated)" class="w-full mb-4 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3">
+
+                <button onclick="createNewSponsor()" class="w-full bg-emerald-500 text-black py-3.5 rounded-2xl font-bold">ADD SPONSOR</button>
+                <button onclick="hideAddSponsorForm()" class="mt-3 w-full text-slate-400">Cancel</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+      const SUPABASE_URL = "https://mddlkobjiquicopymipy.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
+
+        // Obfuscated PIN (not directly visible as 123789)
+        const realPin = "ms4sbfb".split('').reverse().join('').replace(/[a-z]/gi, '') + "789123".split('').reverse().join('').slice(3);
+
+        function verifyPin() {
+            const input = document.getElementById('pin-input').value.trim();
+            const error = document.getElementById('pin-error');
+
+            if (input === "123789") {
+                document.getElementById('pin-modal').classList.add('hidden');
+                document.getElementById('main-admin').classList.remove('hidden');
+            } else {
+                error.classList.remove('hidden');
+                setTimeout(() => error.classList.add('hidden'), 2500);
+            }
+        }
+
+        function triggerAlert(msg) {
+            document.getElementById('modal-text').innerText = msg;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        function switchTab(n) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`content-${n}`).classList.remove('hidden');
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('tab-active'));
+            document.getElementById(`tab-${n}`).classList.add('tab-active');
+        }
+
+        // Initialize - Show PIN modal first
+        window.onload = () => {
+            document.getElementById('pin-modal').classList.remove('hidden');
+        };
+
+
+
+        // ====================== GALLERY / ALBUMS MANAGEMENT ======================
+        async function loadAlbumsAdmin() {
+            const container = document.getElementById('admin-albums-list');
+            container.innerHTML = `<p class="text-slate-400">Loading albums...</p>`;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/albums?select=*,media(*)`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const albums = await res.json();
+
+                if (albums.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400">No albums created yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                albums.forEach(album => {
+                    const mediaCount = album.media ? album.media.length : 0;
+                    html += `
+                        <div class="tactical-card p-5 rounded-2xl">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <h4 class="font-bold">${album.name}</h4>
+                                    <span class="text-xs text-slate-400">${mediaCount} images</span>
+                                </div>
+                                <button onclick="showAddImageForm('${album.id}')" class="text-xs bg-cyan-600 hover:bg-cyan-500 px-4 py-2 rounded">+ Add Image</button>
+                            </div>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<p class="text-red-400">Failed to load albums</p>`;
+            }
+        }
+
+        function switchToAddAlbum() {
+            document.getElementById('add-album-form').classList.remove('hidden');
+        }
+
+        function hideAddAlbumForm() {
+            document.getElementById('add-album-form').classList.add('hidden');
+        }
+
+        async function createNewAlbum() {
+            const name = document.getElementById('album-name').value.trim();
+            if (!name) return triggerAlert("Album name is required");
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/albums`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ name: name })
+                });
+                triggerAlert("✅ Album created!");
+                hideAddAlbumForm();
+                loadAlbumsAdmin();
+            } catch (e) {
+                triggerAlert("Failed to create album");
+            }
+        }
+
+        // Simple alert for adding image (you can expand later)
+        function showAddImageForm(albumId) {
+            const url = prompt("Enter Image URL:");
+            const title = prompt("Enter Image Title:");
+            if (url && title) {
+                fetch(`${SUPABASE_URL}/rest/v1/media`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        album_id: albumId,
+                        title: title,
+                        image_url: url
+                    })
+                }).then(() => {
+                    triggerAlert("Image added to album!");
+                    loadAlbumsAdmin();
+                });
+            }
+        }
+
+        // Initialize on Gallery tab
+        window.onload = () => {
+            switchTab(4);
+            loadAlbumsAdmin();
+        };
+
+
+
+
+
+// ====================== SQUAD MANAGEMENT ======================
+        async function loadSquadAdmin() {
+            const container = document.getElementById('admin-squad-list');
+            container.innerHTML = `<p class="text-slate-400">Loading squad...</p>`;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/players?order=jersey_number.asc`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const players = await res.json();
+
+                if (players.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400">No players in squad yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                players.forEach(p => {
+                    html += `
+                        <div class="tactical-card p-5 rounded-2xl flex items-center gap-4">
+                            <div class="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-xl font-black text-cyan-400">
+                                #${p.jersey_number}
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-bold">${p.name}</h4>
+                                <p class="text-xs text-slate-400">${p.position_role || p.line_position} • ${p.line_position}</p>
+                            </div>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<p class="text-red-400">Failed to load squad</p>`;
+            }
+        }
+
+        function switchToAddPlayer() {
+            document.getElementById('add-player-form').classList.remove('hidden');
+        }
+
+        function hideAddPlayerForm() {
+            document.getElementById('add-player-form').classList.add('hidden');
+        }
+
+        async function createNewPlayer() {
+            const name = document.getElementById('player-name').value.trim();
+            const jersey = parseInt(document.getElementById('player-jersey').value);
+            const line_position = document.getElementById('player-position').value.trim().toUpperCase();
+            const position_role = document.getElementById('player-role').value.trim();
+            const image_url = document.getElementById('player-image').value.trim();
+
+            if (!name || !jersey || !line_position) {
+                triggerAlert("Name, Jersey Number and Position are required!");
+                return;
+            }
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/players`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        jersey_number: jersey,
+                        line_position: line_position,
+                        position_role: position_role || line_position,
+                        image_url: image_url || null
+                    })
+                });
+
+                triggerAlert("✅ Player added to squad successfully!");
+                hideAddPlayerForm();
+                loadSquadAdmin();
+            } catch (e) {
+                triggerAlert("Failed to add player");
+            }
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            switchTab(1); // Open on Squad tab by default
+            loadSquadAdmin();
+        };
+
+
+
+
+        // ====================== SPONSORSHIP MANAGEMENT ======================
+        async function loadSponsorsAdmin() {
+            const container = document.getElementById('admin-sponsors-list');
+            container.innerHTML = `<p class="text-slate-400">Loading sponsors...</p>`;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/sponsors?order=created_at.desc`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const sponsors = await res.json();
+
+                if (sponsors.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400">No sponsors yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                sponsors.forEach(s => {
+                    html += `
+                        <div class="tactical-card p-5 rounded-2xl">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-xs text-cyan-400">${s.tier || 'PARTNER'}</span>
+                                    <h4 class="font-bold text-lg">${s.name}</h4>
+                                </div>
+                                <span class="text-xs text-slate-500">${s.images ? s.images.length + ' images' : ''}</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">${s.writeup || ''}</p>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<p class="text-red-400">Failed to load sponsors</p>`;
+            }
+        }
+
+        function switchToAddSponsor() {
+            document.getElementById('add-sponsor-form').classList.remove('hidden');
+        }
+
+        function hideAddSponsorForm() {
+            document.getElementById('add-sponsor-form').classList.add('hidden');
+        }
+
+        async function createNewSponsor() {
+            const name = document.getElementById('sponsor-name').value.trim();
+            const writeup = document.getElementById('sponsor-writeup').value.trim();
+            const tier = document.getElementById('sponsor-tier').value.trim();
+            let images = document.getElementById('sponsor-images').value.trim();
+
+            if (!name || !writeup) {
+                triggerAlert("Sponsor name and write-up are required!");
+                return;
+            }
+
+            // Convert comma-separated URLs to array
+            const imageArray = images ? images.split(',').map(url => url.trim()).filter(url => url) : [];
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/sponsors`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        writeup: writeup,
+                        tier: tier || "Official Partner",
+                        images: imageArray
+                    })
+                });
+
+                triggerAlert("✅ Sponsor added successfully!");
+                hideAddSponsorForm();
+                loadSponsorsAdmin();
+            } catch (e) {
+                triggerAlert("Failed to add sponsor");
+            }
+        }
+        window.onload = () => {
+            switchTab(5); // Open on Sponsorship tab
+            loadSponsorsAdmin();
+        };
+
+
+// ====================== NEWS MANAGEMENT ======================
+async function loadNewsAdmin() {
+            const container = document.getElementById('admin-news-list');
+            container.innerHTML = `<p class="text-slate-400">Loading news...</p>`;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/news?order=created_at.desc`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const news = await res.json();
+
+                if (news.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400">No news posts yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                news.forEach(post => {
+                    html += `
+                        <div class="tactical-card p-5 rounded-2xl">
+                            <div class="flex justify-between">
+                                <div class="flex-1">
+                                    <span class="text-xs text-cyan-400">${post.tag || 'UPDATE'}</span>
+                                    <h4 class="font-bold mt-1">${post.title}</h4>
+                                </div>
+                                <span class="text-xs text-slate-500">${post.date || ''}</span>
+                            </div>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<p class="text-red-400">Failed to load news</p>`;
+            }
+        }
+
+        function switchToAddNews() {
+            document.getElementById('add-news-form').classList.remove('hidden');
+        }
+
+        function hideAddNewsForm() {
+            document.getElementById('add-news-form').classList.add('hidden');
+        }
+
+        async function createNewNews() {
+            const title = document.getElementById('news-title').value.trim();
+            const content = document.getElementById('news-content').value.trim();
+            const image_url = document.getElementById('news-image').value.trim();
+            const tag = document.getElementById('news-tag').value.trim() || "UPDATE";
+
+            if (!title || !content) {
+                triggerAlert("Title and Content are required!");
+                return;
+            }
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/news`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        content: content,
+                        image_url: image_url || null,
+                        tag: tag,
+                        date: new Date().toISOString().split('T')[0]
+                    })
+                });
+
+                triggerAlert("✅ News post published successfully!");
+                hideAddNewsForm();
+                loadNewsAdmin();
+            } catch (e) {
+                triggerAlert("Failed to publish news");
+            }
+        }
+
+        window.onload = () => {
+            switchTab(2); // Start on News tab
+            loadNewsAdmin();
+        };
+
+
+
+// ====================== KITS MANAGEMENT ======================
+        async function loadKitsAdmin() {
+            const container = document.getElementById('admin-kits-list');
+            container.innerHTML = `<p class="text-slate-400">Loading kits...</p>`;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/kits?order=created_at.desc`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const kits = await res.json();
+
+                if (kits.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400">No kits added yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                kits.forEach(kit => {
+                    html += `
+                        <div class="tactical-card p-5 rounded-2xl">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-xs text-cyan-400">${kit.variant || 'Primary'}</span>
+                                    <h4 class="font-bold text-lg">${kit.title}</h4>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">${kit.description || ''}</p>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<p class="text-red-400">Failed to load kits</p>`;
+            }
+        }
+
+        function switchToAddKit() {
+            document.getElementById('add-kit-form').classList.remove('hidden');
+        }
+
+        function hideAddKitForm() {
+            document.getElementById('add-kit-form').classList.add('hidden');
+        }
+
+        async function createNewKit() {
+            const title = document.getElementById('kit-title').value.trim();
+            const description = document.getElementById('kit-description').value.trim();
+            const image_url = document.getElementById('kit-image').value.trim();
+            const variant = document.getElementById('kit-variant').value.trim();
+
+            if (!title || !description) {
+                triggerAlert("Kit title and description are required!");
+                return;
+            }
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/kits`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        description: description,
+                        image_url: image_url || null,
+                        variant: variant || "Primary"
+                    })
+                });
+
+                triggerAlert("✅ New kit added successfully!");
+                hideAddKitForm();
+                loadKitsAdmin();
+            } catch (e) {
+                triggerAlert("Failed to add kit");
+            }
+        }
+
+        // Initialize - Open on Kits tab
+        window.onload = () => {
+            switchTab(3);
+            loadKitsAdmin();
+        };
+
+
+
+
+
+        // ====================== MATCHES MANAGEMENT ======================
+        async function loadMatchesAdmin() {
+            const container = document.getElementById('admin-matches-list');
+            container.innerHTML = `<p class="text-slate-400">Loading...</p>`;
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/matches?order=created_at.desc`, {
+                    headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` }
+                });
+                const matches = await res.json();
+
+                if (matches.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400">No matches found.</p>`;
+                    return;
+                }
+
+                let html = '';
+                matches.forEach(m => {
+                    html += `
+                        <div class="tactical-card p-5 rounded-2xl">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs text-slate-500">${m.competition}</span><br>
+                                    <span class="font-bold">${m.home_team} vs ${m.away_team}</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-2xl font-black">${m.home_score} - ${m.away_score}</span><br>
+                                    <span class="text-cyan-400 text-sm">${m.time_display || '00:00'}</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex gap-2 flex-wrap">
+                                <button onclick="updateMatchStatus('${m.id}', 'LIVE')" class="text-xs px-4 py-2 bg-green-600 rounded">Start Live</button>
+                                <button onclick="updateMatchStatus('${m.id}', 'HT')" class="text-xs px-4 py-2 bg-amber-600 rounded">HT</button>
+                                <button onclick="updateMatchStatus('${m.id}', 'SECOND_HALF')" class="text-xs px-4 py-2 bg-blue-600 rounded">2nd Half</button>
+                                <button onclick="updateMatchStatus('${m.id}', 'FT')" class="text-xs px-4 py-2 bg-red-600 rounded">Full Time</button>
+                            </div>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                container.innerHTML = `<p class="text-red-400">Failed to load matches</p>`;
+            }
+        }
+
+        async function updateMatchStatus(id, status) {
+            let time = status === 'HT' ? 'HT' : status === 'FT' ? 'FT' : status === 'SECOND_HALF' ? '46:00' : '00:00';
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ status: status, time_display: time })
+                });
+                triggerAlert(`Match status updated to ${status}`);
+                loadMatchesAdmin();
+            } catch (e) {
+                triggerAlert("Failed to update status");
+            }
+        }
+
+        function switchToAddMatch() {
+            document.getElementById('add-match-form').classList.remove('hidden');
+        }
+
+        function hideAddMatchForm() {
+            document.getElementById('add-match-form').classList.add('hidden');
+        }
+
+        async function createNewMatch() {
+            const home = document.getElementById('new-home-team').value.trim();
+            const away = document.getElementById('new-away-team').value.trim();
+            const comp = document.getElementById('new-competition').value.trim();
+
+            if (!home || !away) return triggerAlert("Home and Away teams are required");
+
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/matches`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        home_team: home,
+                        away_team: away,
+                        competition: comp || "League Match",
+                        status: "UPCOMING",
+                        time_display: "00:00",
+                        home_score: 0,
+                        away_score: 0
+                    })
+                });
+                triggerAlert("✅ New match created!");
+                hideAddMatchForm();
+                loadMatchesAdmin();
+            } catch (e) {
+                triggerAlert("Failed to create match");
+            }
+        }
+
+        // Other update functions (unchanged)
+        async function updateSection(table, data) {
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+                    method: 'POST',
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "Content-Type": "application/json",
+                        "Prefer": "resolution=merge-duplicates"
+                    },
+                    body: JSON.stringify(data)
+                });
+                triggerAlert(`✅ ${table.toUpperCase()} updated successfully!`);
+            } catch (e) {
+                triggerAlert("❌ Update failed.");
+            }
+        }
+
+        function updateSquad() { const data = JSON.parse(document.getElementById('squad-input').value || '[]'); updateSection('players', data); }
+        function updateNews() { const data = JSON.parse(document.getElementById('news-input').value || '[]'); updateSection('news', data); }
+        function updateKits() { const data = JSON.parse(document.getElementById('kits-input').value || '[]'); updateSection('kits', data); }
+        function updateGallery() { const data = JSON.parse(document.getElementById('gallery-input').value || '[]'); updateSection('media', data); }
+        function updateSponsorship() { const data = JSON.parse(document.getElementById('sponsorship-input').value || '[]'); updateSection('sponsors', data); }
+
+        window.onload = () => {
+            switchTab(0);
+            loadMatchesAdmin();
+        };
+    </script>
+</body>
+</html>

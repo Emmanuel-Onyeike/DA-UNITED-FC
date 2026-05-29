@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.A UNITED | Official Home</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* High-Octane Tactical Industrial Aesthetics */
+        .tactical-card {
+            background: rgba(10, 15, 26, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+        }
+        .electric-text {
+            color: #00d2ff;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-[#080C14] text-gray-100 font-sans antialiased selection:bg-cyan-500 selection:text-black pb-16 md:pb-0 overflow-x-hidden">
+
+    <!-- Global Target System Alert Modal Anchor (Center Page Alerts) -->
+    <div id="modal-container" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="tactical-card p-6 rounded-xl max-w-sm w-full border border-cyan-500/40 relative shadow-[0_0_50px_rgba(0,210,255,0.1)]">
+            <h3 class="text-lg font-bold text-white tracking-wide uppercase mb-2">System Notice</h3>
+            <p id="modal-text" class="text-xs text-slate-400 mb-6 leading-relaxed"></p>
+            <button onclick="toggleModal()" class="w-full text-xs font-bold bg-cyan-500 text-black py-2.5 rounded hover:bg-cyan-400 transition tracking-wider uppercase">Acknowledge</button>
+        </div>
+    </div>
+
+    <!-- Slide-Out Mobile Navigation Drawer (Right Edge-Aligned Modal) -->
+    <div id="mobile-drawer" class="fixed inset-0 z-50 pointer-events-none hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop Layer -->
+        <div id="drawer-backdrop" onclick="toggleDrawer()" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-auto"></div>
+        
+        <!-- Sliding Content Container -->
+        <div id="drawer-content" class="absolute top-0 right-0 h-full w-72 bg-[#080C14]/95 border-l border-slate-800/80 p-6 flex flex-col justify-between translate-x-full transition-transform duration-300 ease-out pointer-events-auto shadow-[-10px_0_30px_rgba(0,0,0,0.5)]">
+            <div>
+                <!-- Drawer Top Bar -->
+                <div class="flex items-center justify-between pb-6 border-b border-slate-800/60 mb-8">
+                    <span class="text-[10px] font-mono font-bold tracking-[0.2em] text-cyan-400 uppercase">Navigation</span>
+                    <!-- Close Action Button -->
+                    <button onclick="toggleDrawer()" class="w-8 h-8 rounded border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-cyan-500/40 transition-colors" aria-label="Close menu">
+                        <svg class="w-4 h-4 stroke-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Structured App Destination Pipelines -->
+                <nav class="flex flex-col space-y-4 text-xs font-bold tracking-[0.2em]">
+                    <a href="index.html" onclick="toggleDrawer()" class="electric-text py-2 border-b border-cyan-500/10 block">HOME</a>
+                    <a href="games.html" onclick="toggleDrawer()" class="text-slate-400 hover:text-cyan-400 py-2 border-b border-slate-800/30 block transition-colors">GAMES</a>
+                    <a href="squad.html" onclick="toggleDrawer()" class="text-slate-400 hover:text-cyan-400 py-2 border-b border-slate-800/30 block transition-colors">SQUAD</a>
+                    <a href="news.html" onclick="toggleDrawer()" class="text-slate-400 hover:text-cyan-400 py-2 border-b border-slate-800/30 block transition-colors">NEWS</a>
+                    <a href="kits.html" onclick="toggleDrawer()" class="text-slate-400 hover:text-cyan-400 py-2 border-b border-slate-800/30 block transition-colors">KITS</a>
+                    <a href="gallery.html" onclick="toggleDrawer()" class="text-slate-400 hover:text-cyan-400 py-2 border-b border-slate-800/30 block transition-colors">GALLERY</a>
+                    <a href="sponsorship.html" onclick="toggleDrawer()" class="text-slate-400 hover:text-cyan-400 py-2 block transition-colors">SPONSORSHIP</a>
+                </nav>
+            </div>
+
+            <!-- Drawer Bottom Signature Anchor -->
+            <div class="pt-6 border-t border-slate-800/60 text-center">
+                <a href="#contact" onclick="toggleDrawer()" class="w-full inline-block text-center text-[10px] bg-cyan-500 text-black py-2.5 font-bold rounded hover:bg-cyan-400 transition-all tracking-widest uppercase">GET IN TOUCH</a>
+                <span class="text-[8px] text-slate-600 font-mono tracking-widest uppercase block mt-4">DELTA - ABUJA UNITED</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="border-b border-slate-800/80 bg-[#080C14]/90 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Branding -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg border border-cyan-500/30 flex items-center justify-center bg-cyan-950/40 relative overflow-hidden group p-1 shrink-0">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-transparent opacity-50 z-0"></div>
+                        <img 
+                            src="IMG_5489.PNG" 
+                            alt="D.A United Crest" 
+                            class="w-full h-full object-contain relative z-10 transition-transform duration-300 group-hover:scale-110"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                        >
+                        <span class="hidden font-black text-cyan-400 text-xs tracking-tighter relative z-10">DA</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-black tracking-wider text-lg text-white leading-none">D.A <span class="electric-text">UNITED</span></span>
+                        <span class="text-[9px] tracking-widest text-slate-500 font-bold uppercase mt-0.5">Delta - Abuja</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex space-x-8 text-xs font-bold tracking-widest relative">
+                    <a href="index.html" class="electric-text relative py-1 after:absolute after:bottom-[-22px] after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400">HOME</a>
+                    <a href="games.html" class="text-slate-400 hover:text-cyan-400 transition-colors py-1">GAMES</a>
+                    <a href="squad.html" class="text-slate-400 hover:text-cyan-400 transition-colors py-1">SQUAD</a>
+                    <a href="news.html" class="text-slate-400 hover:text-cyan-400 transition-colors py-1">NEWS</a>
+                    <a href="kits.html" class="text-slate-400 hover:text-cyan-400 transition-colors py-1">KITS</a>
+                    <a href="gallery.html" class="text-slate-400 hover:text-cyan-400 transition-colors py-1">GALLERY</a>
+                    <a href="sponsorship.html" class="text-slate-400 hover:text-cyan-400 transition-colors py-1">SPONSORSHIP</a>
+                </div>
+
+                <!-- Right Control Interface Action Panel -->
+                <div class="flex items-center gap-3">
+                    <!-- Contact Core Action CTA (Desktop Only) -->
+                    <a href="#contact" class="hidden md:inline-flex text-xs bg-cyan-500 text-black px-4 py-2 font-bold rounded hover:bg-cyan-400 transition-all tracking-wider shadow-[0_0_15px_rgba(0,210,255,0.2)]">GET IN TOUCH</a>
+                    
+                    <!-- Mobile Hamburger Menu Button Trigger -->
+                    <button onclick="toggleDrawer()" class="md:hidden w-10 h-10 rounded border border-slate-800 bg-slate-900/60 flex items-center justify-center text-white hover:border-cyan-500/40 transition-colors" aria-label="Open navigation menu">
+                        <svg class="w-6 h-6 stroke-white" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Bottom Tab Bar -->
+        <div class="md:hidden fixed bottom-0 left-0 right-0 bg-[#0A0F1A]/95 border-t border-slate-800/80 flex justify-around py-3 text-[9px] font-bold tracking-widest z-50 backdrop-blur-lg shadow-[0_-10px_20px_rgba(0,0,0,0.5)]">
+            <a href="index.html" class="electric-text text-center flex flex-col items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mb-0.5"></span>
+                <span>HOME</span>
+            </a>
+            <a href="games.html" class="text-slate-500 text-center flex flex-col items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-transparent mb-0.5"></span>
+                <span>GAMES</span>
+            </a>
+            <a href="news.html" class="text-slate-500 text-center flex flex-col items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-transparent mb-0.5"></span>
+                <span>NEWS</span>
+            </a>
+            <a href="squad.html" class="text-slate-500 text-center flex flex-col items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-transparent mb-0.5"></span>
+                <span>SQUAD</span>
+            </a>
+            <a href="gallery.html" class="text-slate-500 text-center flex flex-col items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-transparent mb-0.5"></span>
+                <span>MEDIA</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Showcase Section -->
+    <section class="relative min-h-[80vh] flex flex-col justify-center items-center text-center px-4 pt-12 pb-16 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent pointer-events-none"></div>
+        
+        <p class="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-cyan-400 font-bold mb-4 animate-pulse">Delta – Abuja United</p>
+        <h1 class="text-3xl sm:text-6xl md:text-8xl font-black text-white tracking-tight leading-none mb-6 max-w-5xl">
+            THE NEXT GENERATION <br class="hidden sm:inline">OF FOOTBALL ELITE
+        </h1>
+        <p class="text-xs sm:text-sm md:text-lg text-slate-400 max-w-xl font-medium mb-10 leading-relaxed px-2">
+            "Talent meets grit. Rising from the dust, conquering the pitches with structural precision and high-octane drive."
+        </p>
+
+        <!-- Dynamic Fitted Image Wrapper -->
+        <div class="w-full max-w-sm sm:max-w-xl md:max-w-2xl aspect-video tactical-card rounded-xl border border-cyan-500/30 p-2 relative overflow-hidden group shadow-[0_0_40px_rgba(0,210,255,0.08)] mx-auto">
+            <div class="absolute inset-0 bg-radial from-cyan-500/15 to-transparent pointer-events-none z-0"></div>
+            <img 
+                src="da united.png" 
+                alt="D.A United Jersey Showcase" 
+                class="w-full h-full object-contain rounded-lg relative z-10 transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <div class="absolute inset-0 hidden flex-col items-center justify-center p-6 text-center z-10">
+                <span class="text-slate-600 text-xs font-mono uppercase tracking-widest">[ PLACE YOUR "jersey.jpg" IMAGE HERE ]</span>
+            </div>
+            <!-- Tech Trim Accents -->
+            <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-cyan-400/40 z-20"></div>
+            <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-cyan-400/40 z-20"></div>
+            <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-cyan-400/40 z-20"></div>
+            <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-cyan-400/40 z-20"></div>
+        </div>
+    </section>
+
+    <!-- Operational Core Dashboard (Live Widgets & Stats) -->
+    <section class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Live Arena Match State Block -->
+        <div class="tactical-card p-6 rounded-xl border border-slate-800 flex flex-col justify-between lg:col-span-1 relative overflow-hidden min-h-[180px]">
+            <div class="absolute top-0 right-0 bg-slate-800/40 text-slate-500 font-mono font-bold text-[9px] tracking-widest px-3 py-1 uppercase rounded-bl border-l border-b border-slate-800/80">STATUS</div>
+            <div class="my-auto">
+                <span class="text-[9px] font-mono font-bold text-cyan-500/80 uppercase tracking-widest block mb-1">📅 Campaign Schedule</span>
+                <h4 id="campaign-title" class="text-lg font-bold text-white tracking-wide uppercase">Connecting...</h4>
+                <p id="campaign-desc" class="text-xs text-slate-500 mt-1">Syncing to live datastream variables.</p>
+            </div>
+            <a href="games.html" class="w-full text-center text-[11px] font-bold border border-slate-800 hover:border-cyan-500/40 text-slate-400 hover:text-cyan-400 py-2.5 rounded transition tracking-wider uppercase bg-slate-900/30 mt-6 block">
+                NOTIFICATION ENGINE
+            </a>
+        </div>
+
+        <!-- Club Performance Metrics Grid -->
+        <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Stat 1: Roster -->
+            <div class="tactical-card p-5 rounded-xl border border-slate-800/60 flex flex-col justify-center relative group hover:border-cyan-500/20 transition">
+                <span class="text-[9px] font-mono text-slate-500 tracking-widest uppercase block mb-1">Squad Roster</span>
+                <span class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-cyan-400 transition-colors">18</span>
+                <span class="text-[9px] text-slate-400 mt-1">Registered Athletes</span>
+            </div>
+            
+            <!-- Stat 2: Focus Target Objectives -->
+            <div class="tactical-card p-5 rounded-xl border border-slate-800/60 flex flex-col justify-center relative group hover:border-cyan-500/20 transition">
+                <span class="text-[9px] font-mono text-slate-500 tracking-widest uppercase block mb-1">Focus Targets</span>
+                <span class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight group-hover:text-cyan-400 transition-colors">02</span>
+                <span class="text-[9px] text-slate-400 mt-1">League Title & Sponsorship</span>
+            </div>
+            
+            <!-- Stat 3: Official Club Motto -->
+            <div class="tactical-card p-5 rounded-xl border border-cyan-500/10 bg-gradient-to-br from-cyan-950/10 to-transparent flex flex-col justify-center relative group hover:border-cyan-500/30 transition">
+                <span class="text-[9px] font-mono text-cyan-400 tracking-widest uppercase block mb-1">Club Motto</span>
+                <span class="text-lg sm:text-xl font-black text-white tracking-tight uppercase leading-tight group-hover:text-cyan-400 transition-colors">
+                    GRIT MEETS <br>GLORY.
+                </span>
+                <span class="text-[9px] text-slate-500 mt-1 font-mono">D.A UNITED Core Directive</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Sponsorship Promo Anchor -->
+    <section class="max-w-7xl mx-auto px-4 py-6 mb-8">
+        <div class="tactical-card border border-cyan-500/20 bg-gradient-to-r from-cyan-950/20 to-transparent rounded-xl p-6 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-cyan-500 text-black font-mono font-bold text-[9px] tracking-widest px-4 py-1 uppercase rounded-bl">VISIBILITY VALUE</div>
+            <div class="text-center lg:text-left">
+                <h3 class="text-xl md:text-2xl font-bold text-white tracking-wide uppercase">Accelerate Your Brand Authority</h3>
+                <p class="text-xs text-slate-400 max-w-xl mt-1.5 leading-relaxed">Secure premium front-of-jersey visibility and structural media placements across upcoming campaigns. Let's make your operation look organized and highly legitimised to external eyes.</p>
+            </div>
+            <a href="sponsorship.html" class="w-full lg:w-auto text-center text-xs bg-cyan-500 text-black px-5 py-3 font-bold rounded hover:bg-cyan-400 transition-all tracking-wider uppercase shrink-0 shadow-[0_0_20px_rgba(0,210,255,0.15)]">REVIEW TIER OPPORTUNITIES</a>
+        </div>
+    </section>
+
+    <!-- Unified Contact / Social Section Footer -->
+    <footer id="contact" class="bg-[#05080E] border-t border-slate-900/80 pt-12 pb-24 md:pb-12 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl md:text-3xl font-black text-white tracking-wide mb-2 uppercase">JOIN THE MOMENTUM</h2>
+            <p class="text-xs text-slate-400 mb-8 max-w-md mx-auto leading-relaxed">Connect directly with management for bookings, tournament arrangements, or corporate investment validation.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <a href="#" class="tactical-card p-4 rounded-xl border border-slate-800/80 flex flex-col items-center justify-center hover:border-cyan-500/50 transition-all group">
+                    <span class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors tracking-wide">WHATSAPP</span>
+                    <span class="text-[9px] font-mono text-slate-500 mt-1 uppercase">Direct Pipeline</span>
+                </a>
+                <a href="#" class="tactical-card p-4 rounded-xl border border-slate-800/80 flex flex-col items-center justify-center hover:border-cyan-500/50 transition-all group">
+                    <span class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors tracking-wide">INSTAGRAM</span>
+                    <span class="text-[9px] font-mono text-slate-500 mt-1 uppercase">@daunited</span>
+                </a>
+                <a href="#" class="tactical-card p-4 rounded-xl border border-slate-800/80 flex flex-col items-center justify-center hover:border-cyan-500/50 transition-all group">
+                    <span class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors tracking-wide">TIKTOK</span>
+                    <span class="text-[9px] font-mono text-slate-500 mt-1 uppercase">Video Stream</span>
+                </a>
+                <a href="mailto:info@daunited.com" class="tactical-card p-4 rounded-xl border border-slate-800/80 flex flex-col items-center justify-center hover:border-cyan-500/50 transition-all group">
+                    <span class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors tracking-wide">EMAIL</span>
+                    <span class="text-[9px] font-mono text-slate-500 mt-1 uppercase">Official Box</span>
+                </a>
+            </div>
+            <p class="text-[10px] text-slate-600 font-mono tracking-widest uppercase">&copy; 2026 D.A UNITED. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <!-- Core Interactive Operations Engine -->
+    <script>
+        // System Notice Center Alert Controls
+        function toggleModal() {
+            const el = document.getElementById('modal-container');
+            el.classList.toggle('hidden');
+        }
+
+        function triggerAlert(message) {
+            document.getElementById('modal-text').innerText = message;
+            if(document.getElementById('modal-container').classList.contains('hidden')) {
+                toggleModal();
+            }
+        }
+
+        // Right Slide-Out Mobile Navigation Drawer Controls
+        function toggleDrawer() {
+            const drawer = document.getElementById('mobile-drawer');
+            const backdrop = document.getElementById('drawer-backdrop');
+            const content = document.getElementById('drawer-content');
+
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; 
+                setTimeout(() => {
+                    backdrop.classList.replace('opacity-0', 'opacity-100');
+                    content.classList.replace('translate-x-full', 'translate-x-0');
+                }, 10);
+            } else {
+                backdrop.classList.replace('opacity-100', 'opacity-0');
+                content.classList.replace('translate-x-0', 'translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                    document.body.style.overflow = ''; 
+                }, 300); 
+            }
+        }
+
+        // Supabase REST Initialization Datastream integration
+        const PROJECT_URL = "https://mddlkobjiquicopymipy.supabase.co";
+        const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
+
+        async function initLiveDashboard() {
+            const titleEl = document.getElementById('campaign-title');
+            const descEl = document.getElementById('campaign-desc');
+
+            try {
+                // Hooking text payload with targeted identification row 'arena_state'
+                const response = await fetch(`${PROJECT_URL}/rest/v1/site_content?id=eq.arena_state`, {
+                    headers: {
+                        "apikey": ANON_KEY,
+                        "Authorization": `Bearer ${ANON_KEY}`
+                    }
+                });
+
+                if (!response.ok) throw new Error(`Handshake Code: ${response.status}`);
+                
+                const data = await response.json();
+                
+                if (data && data[0] && data[0].data) {
+                    const payload = data[0].data;
+                    titleEl.innerText = payload.title || "No Matches Scheduled";
+                    descEl.innerText = payload.description || "Fixtures are being finalized by tournament officials.";
+                } else {
+                    titleEl.innerText = "No Matches Scheduled";
+                    descEl.innerText = "Fixtures are being finalized by tournament officials.";
+                }
+            } catch (err) {
+                console.error("Dashboard datastream sync error:", err);
+                titleEl.innerText = "Offline Mode";
+                descEl.innerText = "Failed to synchronize state with live infrastructure.";
+            }
+        }
+
+        // Fire initialization once window DOM layer loads complete
+        window.addEventListener('DOMContentLoaded', initLiveDashboard);
+    </script>
+</body>
+</html>
