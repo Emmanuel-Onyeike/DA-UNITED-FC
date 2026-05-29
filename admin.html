@@ -29,7 +29,7 @@
                 <img src="IMG_5489.PNG" class="w-10 h-10 object-contain" alt="Crest">
                 <div class="font-black text-2xl">ADMIN <span class="electric-text">HQ</span></div>
             </div>
-            <button onclick="triggerAlert('Session terminated')" class="text-xs px-5 py-2 border border-red-500/30 text-red-400 rounded hover:bg-red-950">LOGOUT</button>
+<button onclick="logoutAdmin()" class="text-xs px-5 py-2 border border-red-500/30 text-red-400 rounded hover:bg-red-950">LOGOUT</button>
         </div>
     </nav>
 
@@ -289,13 +289,20 @@
             }
         }
 
-        function triggerAlert(msg) {
+function triggerAlert(msg) {
             document.getElementById('modal-text').innerText = msg;
             document.getElementById('modal').classList.remove('hidden');
         }
 
         function closeModal() {
             document.getElementById('modal').classList.add('hidden');
+        }
+
+        // Logout function
+        function logoutAdmin() {
+            document.getElementById('main-admin').classList.add('hidden');
+            document.getElementById('pin-modal').classList.remove('hidden');
+            document.getElementById('pin-input').value = '';
         }
 
         function switchTab(n) {
