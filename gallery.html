@@ -182,8 +182,11 @@
             }
         }
 
-        // Load gallery on page load
+// Load gallery on page load
         window.addEventListener('DOMContentLoaded', loadGallery);
+        
+        // Auto-refresh every 10 seconds
+        setInterval(loadGallery, 10000);
     </script>
 </body>
 </html>
