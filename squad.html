@@ -200,8 +200,11 @@
             }
         }
 
-        // Load squad on page load
+// Load squad on page load
         window.addEventListener('DOMContentLoaded', loadSquad);
+        
+        // Auto-refresh every 10 seconds
+        setInterval(loadSquad, 10000);
     </script>
 </body>
 </html>
