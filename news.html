@@ -204,8 +204,11 @@
             }
         }
 
-        // Load news when page opens
+// Load news when page opens
         window.addEventListener('DOMContentLoaded', loadNews);
+        
+        // Auto-refresh every 10 seconds
+        setInterval(loadNews, 10000);
     </script>
 </body>
 </html>
