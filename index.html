@@ -299,7 +299,7 @@
             }
         }
 
-        // Supabase REST Initialization Datastream integration
+// Supabase REST Initialization Datastream integration
         const PROJECT_URL = "https://mddlkobjiquicopymipy.supabase.co";
         const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
 
@@ -337,6 +337,9 @@
 
         // Fire initialization once window DOM layer loads complete
         window.addEventListener('DOMContentLoaded', initLiveDashboard);
+        
+        // Auto-refresh every 10 seconds to show latest changes from admin
+        setInterval(initLiveDashboard, 10000);
     </script>
 </body>
 </html>
