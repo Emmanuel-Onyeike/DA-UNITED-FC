@@ -308,8 +308,8 @@
             const descEl = document.getElementById('campaign-desc');
 
             try {
-                // Hooking text payload with targeted identification row 'arena_state'
-                const response = await fetch(`${PROJECT_URL}/rest/v1/site_content?id=eq.arena_state`, {
+                // Fetch from matches table - same source as admin and games page
+                const response = await fetch(`${PROJECT_URL}/rest/v1/matches?status=eq.UPCOMING&order=created_at.asc&limit=1`, {
                     headers: {
                         "apikey": ANON_KEY,
                         "Authorization": `Bearer ${ANON_KEY}`
@@ -318,15 +318,43 @@
 
                 if (!response.ok) throw new Error(`Handshake Code: ${response.status}`);
                 
-                const data = await response.json();
+                const matches = await response.json();
                 
-                if (data && data[0] && data[0].data) {
-                    const payload = data[0].data;
-                    titleEl.innerText = payload.title || "No Matches Scheduled";
-                    descEl.innerText = payload.description || "Fixtures are being finalized by tournament officials.";
+                if (matches && matches.length > 0) {
+                    const match = matches[0];
+                    titleEl.innerText = `${match.home_team} vs ${match.away_team}`;
+                    descEl.innerText = `${match.competition || 'League Match'} - ${match.status || 'UPCOMING'}`;
                 } else {
-                    titleEl.innerText = "No Matches Scheduled";
-                    descEl.innerText = "Fixtures are being finalized by tournament officials.";
+                    // Check for LIVE matches
+                    const liveRes = await fetch(`${PROJECT_URL}/rest/v1/matches?status=eq.LIVE&order=created_at.desc&limit=1`, {
+                        headers: {
+                            "apikey": ANON_KEY,
+                            "Authorization": `Bearer ${ANON_KEY}`
+                        }
+                    });
+                    const liveMatches = await liveRes.json();
+                    if (liveMatches && liveMatches.length > 0) {
+                        const match = liveMatches[0];
+                        titleEl.innerText = `${match.home_team} ${match.home_score} - ${match.away_score} ${match.away_team}`;
+                        descEl.innerText = `LIVE NOW - ${match.time_display}`;
+                    } else {
+                        // Check for recent finished matches
+                        const ftRes = await fetch(`${PROJECT_URL}/rest/v1/matches?status=eq.FT&order=created_at.desc&limit=1`, {
+                            headers: {
+                                "apikey": ANON_KEY,
+                                "Authorization": `Bearer ${ANON_KEY}`
+                            }
+                        });
+                        const ftMatches = await ftRes.json();
+                        if (ftMatches && ftMatches.length > 0) {
+                            const match = ftMatches[0];
+                            titleEl.innerText = `${match.home_team} ${match.home_score} - ${match.away_score} ${match.away_team}`;
+                            descEl.innerText = `Final Result - ${match.competition}`;
+                        } else {
+                            titleEl.innerText = "No Matches Scheduled";
+                            descEl.innerText = "Fixtures are being finalized by tournament officials.";
+                        }
+                    }
                 }
             } catch (err) {
                 console.error("Dashboard datastream sync error:", err);
