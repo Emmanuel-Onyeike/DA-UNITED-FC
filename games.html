@@ -237,8 +237,11 @@
             }
         }
 
-        // Load matches on page load
+// Load matches on page load
         window.onload = loadMatches;
+        
+        // Auto-refresh every 10 seconds for live updates
+        setInterval(loadMatches, 10000);
     </script>
 </body>
 </html>
