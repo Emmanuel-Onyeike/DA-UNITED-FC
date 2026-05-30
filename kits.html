@@ -176,8 +176,11 @@
             }
         }
 
-        // Load kits when page opens
+// Load kits when page opens
         window.addEventListener('DOMContentLoaded', loadKits);
+        
+        // Auto-refresh every 10 seconds
+        setInterval(loadKits, 10000);
     </script>
 </body>
 </html>
