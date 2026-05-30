@@ -185,8 +185,11 @@
             }
         }
 
-        // Load sponsors when page loads
+// Load sponsors when page loads
         window.addEventListener('DOMContentLoaded', loadSponsors);
+        
+        // Auto-refresh every 10 seconds
+        setInterval(loadSponsors, 10000);
     </script>
 </body>
 </html>
