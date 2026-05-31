@@ -549,9 +549,10 @@
             }
         }
 
-        // Fire initialization once window DOM layer loads complete
+// Fire initialization once window DOM layer loads complete
         window.addEventListener('DOMContentLoaded', () => {
             console.log('Page loaded, starting data fetch...');
+            // Run immediately
             initLiveDashboard();
             loadHomeNews();
             loadHomeKits();
@@ -559,7 +560,15 @@
             loadHomeSquad();
         });
         
-        // Auto-refresh every 10 seconds to show latest changes from admin
+        // ALSO run immediately after script loads (in case DOMContentLoaded already fired)
+        console.log('Running immediate fetch...');
+        initLiveDashboard();
+        loadHomeNews();
+        loadHomeKits();
+        loadHomeSponsors();
+        loadHomeSquad();
+        
+        // Auto-refresh every 3 seconds to show latest changes from admin (faster refresh)
         setInterval(() => {
             console.log('Auto-refresh triggered...');
             initLiveDashboard();
@@ -567,7 +576,7 @@
             loadHomeKits();
             loadHomeSponsors();
             loadHomeSquad();
-        }, 10000);
+        }, 3000);
     </script>
 </body>
 </html>
