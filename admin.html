@@ -270,12 +270,18 @@
 
 <script src="config.js"></script>
     <script>
-        // Only set if not already defined by config.js
+        // Ensure we have the Supabase credentials - use config.js values or define directly
         if (typeof SUPABASE_URL === 'undefined') {
             var SUPABASE_URL = "https://mddlkobjiquicopymipy.supabase.co";
+        }
+        if (typeof SUPABASE_KEY === 'undefined') {
             var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
         }
         let uploadedImageUrl = '';
+        
+        // Debug - verify credentials are loaded
+        console.log('SUPABASE_URL:', SUPABASE_URL);
+        console.log('SUPABASE_KEY:', SUPABASE_KEY ? 'loaded' : 'missing');
 
         // Obfuscated PIN (not directly visible as 123789)
         const realPin = "ms4sbfb".split('').reverse().join('').replace(/[a-z]/gi, '') + "789123".split('').reverse().join('').slice(3);
