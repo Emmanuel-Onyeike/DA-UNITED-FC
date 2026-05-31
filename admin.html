@@ -289,9 +289,26 @@
             }
         }
 
-function triggerAlert(msg) {
+function triggerAlert(msg, liveUrl = null) {
             document.getElementById('modal-text').innerText = msg;
-            document.getElementById('modal').classList.remove('hidden');
+            const modal = document.getElementById('modal');
+            // Remove existing View Live button if any
+            const existingBtn = document.getElementById('view-live-btn');
+            if (existingBtn) existingBtn.remove();
+            
+            if (liveUrl) {
+                // Add View Live button
+                const btn = document.createElement('button');
+                btn.id = 'view-live-btn';
+                btn.className = 'mt-3 w-full bg-emerald-500 hover:bg-emerald-400 text-black py-3 rounded font-bold text-xs tracking-widest';
+                btn.innerText = 'VIEW LIVE PAGE';
+                btn.onclick = function() {
+                    window.open(liveUrl, '_blank');
+                    closeModal();
+                };
+                document.querySelector('#modal .tactical-card').appendChild(btn);
+            }
+            modal.classList.remove('hidden');
         }
 
         function closeModal() {
@@ -335,7 +352,7 @@ function triggerAlert(msg) {
                     return;
                 }
 
-let html = '';
+                let html = '';
                 albums.forEach(album => {
                     const mediaCount = album.media ? album.media.length : 0;
                     html += `
@@ -384,7 +401,7 @@ let html = '';
                     },
                     body: JSON.stringify({ name: name })
                 });
-                triggerAlert("✅ Album created!");
+                triggerAlert("✅ Album created!", "gallery.html");
                 hideAddAlbumForm();
                 loadAlbumsAdmin();
             } catch (e) {
@@ -438,7 +455,7 @@ let html = '';
                             image_url: imageUrl
                         })
                     });
-                    triggerAlert("✅ Image added to album!");
+                    triggerAlert("✅ Image added to album!", "gallery.html");
                     loadAlbumsAdmin();
                 } else {
                     throw new Error("Upload failed");
@@ -565,7 +582,7 @@ function hideAddPlayerForm() {
                     })
                 });
 
-                triggerAlert("✅ Player added to squad successfully!");
+                triggerAlert("✅ Player added to squad successfully!", "squad.html");
                 hideAddPlayerForm();
                 loadSquadAdmin();
             } catch (e) {
@@ -656,7 +673,7 @@ function hideAddPlayerForm() {
                     })
                 });
 
-                triggerAlert("✅ Sponsor added successfully!");
+                triggerAlert("✅ Sponsor added successfully!", "sponsorship.html");
                 hideAddSponsorForm();
                 loadSponsorsAdmin();
             } catch (e) {
@@ -774,7 +791,7 @@ function hideAddNewsForm() {
                     })
                 });
 
-                triggerAlert("✅ News post published successfully!");
+                triggerAlert("✅ News post published successfully!", "news.html");
                 hideAddNewsForm();
                 loadNewsAdmin();
             } catch (e) {
@@ -893,7 +910,7 @@ function hideAddKitForm() {
                     })
                 });
 
-                triggerAlert("✅ New kit added successfully!");
+                triggerAlert("✅ New kit added successfully!", "kits.html");
                 hideAddKitForm();
                 loadKitsAdmin();
             } catch (e) {
@@ -1035,7 +1052,7 @@ async function updateMatchStatus(id, status) {
                     },
                     body: JSON.stringify({ status: status, time_display: time })
                 });
-                triggerAlert(`Match status updated to ${status}`);
+triggerAlert(`Match status updated to ${status}`, "games.html");
                 loadMatchesAdmin();
             } catch (e) {
                 triggerAlert("Failed to update status");
@@ -1099,7 +1116,7 @@ async function updateMatchStatus(id, status) {
                     })
                 });
                 
-                triggerAlert("✅ Goal added!");
+                triggerAlert("✅ Goal added!", "games.html");
                 hideAddGoalForm(matchId);
                 loadMatchesAdmin();
             } catch (e) {
@@ -1157,7 +1174,7 @@ async function updateMatchStatus(id, status) {
                     })
                 });
                 
-                triggerAlert(`✅ ${color === 'red' ? 'Red' : 'Yellow'} card added!`);
+                triggerAlert(`✅ ${color === 'red' ? 'Red' : 'Yellow'} card added!`, "games.html");
                 hideAddCardForm(matchId);
                 loadMatchesAdmin();
             } catch (e) {
@@ -1198,7 +1215,7 @@ async function updateMatchStatus(id, status) {
                         away_score: 0
                     })
                 });
-                triggerAlert("✅ New match created!");
+                triggerAlert("✅ New match created!", "games.html");
                 hideAddMatchForm();
                 loadMatchesAdmin();
             } catch (e) {
@@ -1206,8 +1223,19 @@ async function updateMatchStatus(id, status) {
             }
         }
 
-        // Other update functions (unchanged)
-        async function updateSection(table, data) {
+// Legacy update functions with live URL mapping
+        async function updateSection(table, data, liveUrl = null) {
+            // Map table names to their corresponding pages
+            const tableToUrl = {
+                'players': 'squad.html',
+                'news': 'news.html',
+                'kits': 'kits.html',
+                'media': 'gallery.html',
+                'sponsors': 'sponsorship.html',
+                'matches': 'games.html'
+            };
+            const url = liveUrl || tableToUrl[table] || null;
+            
             try {
                 await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
                     method: 'POST',
@@ -1219,17 +1247,17 @@ async function updateMatchStatus(id, status) {
                     },
                     body: JSON.stringify(data)
                 });
-                triggerAlert(`✅ ${table.toUpperCase()} updated successfully!`);
+                triggerAlert(`✅ ${table.toUpperCase()} updated successfully!`, url);
             } catch (e) {
                 triggerAlert("❌ Update failed.");
             }
         }
 
-        function updateSquad() { const data = JSON.parse(document.getElementById('squad-input').value || '[]'); updateSection('players', data); }
-        function updateNews() { const data = JSON.parse(document.getElementById('news-input').value || '[]'); updateSection('news', data); }
-        function updateKits() { const data = JSON.parse(document.getElementById('kits-input').value || '[]'); updateSection('kits', data); }
-        function updateGallery() { const data = JSON.parse(document.getElementById('gallery-input').value || '[]'); updateSection('media', data); }
-        function updateSponsorship() { const data = JSON.parse(document.getElementById('sponsorship-input').value || '[]'); updateSection('sponsors', data); }
+        function updateSquad() { const data = JSON.parse(document.getElementById('squad-input').value || '[]'); updateSection('players', data, 'squad.html'); }
+        function updateNews() { const data = JSON.parse(document.getElementById('news-input').value || '[]'); updateSection('news', data, 'news.html'); }
+        function updateKits() { const data = JSON.parse(document.getElementById('kits-input').value || '[]'); updateSection('kits', data, 'kits.html'); }
+        function updateGallery() { const data = JSON.parse(document.getElementById('gallery-input').value || '[]'); updateSection('media', data, 'gallery.html'); }
+        function updateSponsorship() { const data = JSON.parse(document.getElementById('sponsorship-input').value || '[]'); updateSection('sponsors', data, 'sponsorship.html'); }
 
         window.onload = () => {
             switchTab(0);
