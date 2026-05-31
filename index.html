@@ -335,8 +335,11 @@
         }
 
 // Supabase REST Initialization Datastream integration
-        const PROJECT_URL = "https://mddlkobjiquicopymipy.supabase.co";
-        const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
+        // Only set if not already defined by config.js
+        if (typeof PROJECT_URL === 'undefined') {
+            var PROJECT_URL = "https://mddlkobjiquicopymipy.supabase.co";
+            var ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGxrb2JqaXF1aWNvcHltaXB5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMTk1NzksImV4cCI6MjA4MTg5NTU3OX0.QQhDBtqFpgs12DZNmhlsHm2Xf0OllR_5LT3i0A-5IjQ";
+        }
 
         // Fetch latest data from all sections
         async function initLiveDashboard() {
@@ -403,25 +406,18 @@
 // Load latest news for home page
         async function loadHomeNews() {
             const container = document.getElementById('home-news-container');
-            console.log('loadHomeNews container:', container);
-            if (!container) {
-                console.log('News container not found!');
-                return;
-            }
+            if (!container) return;
             
             container.innerHTML = '<p class="text-slate-500 text-xs">Loading news...</p>';
             
             try {
-                console.log('Fetching news from:', PROJECT_URL);
                 const res = await fetch(`${PROJECT_URL}/rest/v1/news?order=created_at.desc&limit=3`, {
                     headers: {
                         "apikey": ANON_KEY,
                         "Authorization": `Bearer ${ANON_KEY}`
                     }
                 });
-                console.log('News response status:', res.status);
                 const news = await res.json();
-                console.log('News data:', news);
                 
                 if (Array.isArray(news) && news.length > 0) {
                     container.innerHTML = news.map(post => `
@@ -440,14 +436,10 @@
             }
         }
 
-        // Load latest kits for home page
+// Load latest kits for home page
         async function loadHomeKits() {
             const container = document.getElementById('home-kits-container');
-            console.log('loadHomeKits container:', container);
-            if (!container) {
-                console.log('Kits container not found!');
-                return;
-            }
+            if (!container) return;
             
             container.innerHTML = '<p class="text-slate-500 text-xs">Loading kits...</p>';
             
@@ -458,9 +450,7 @@
                         "Authorization": `Bearer ${ANON_KEY}`
                     }
                 });
-                console.log('Kits response status:', res.status);
                 const kits = await res.json();
-                console.log('Kits data:', kits);
                 
                 if (Array.isArray(kits) && kits.length > 0) {
                     container.innerHTML = kits.map(kit => `
@@ -484,14 +474,10 @@
             }
         }
 
-        // Load latest sponsors for home page
+// Load latest sponsors for home page
         async function loadHomeSponsors() {
             const container = document.getElementById('home-sponsors-container');
-            console.log('loadHomeSponsors container:', container);
-            if (!container) {
-                console.log('Sponsors container not found!');
-                return;
-            }
+            if (!container) return;
             
             container.innerHTML = '<p class="text-slate-500 text-xs">Loading sponsors...</p>';
             
@@ -502,9 +488,7 @@
                         "Authorization": `Bearer ${ANON_KEY}`
                     }
                 });
-                console.log('Sponsors response status:', res.status);
                 const sponsors = await res.json();
-                console.log('Sponsors data:', sponsors);
                 
                 if (Array.isArray(sponsors) && sponsors.length > 0) {
                     container.innerHTML = sponsors.map(s => `
@@ -522,14 +506,10 @@
             }
         }
 
-        // Load squad count for home page
+// Load squad count for home page
         async function loadHomeSquad() {
             const container = document.getElementById('home-squad-count');
-            console.log('loadHomeSquad container:', container);
-            if (!container) {
-                console.log('Squad container not found!');
-                return;
-            }
+            if (!container) return;
             
             try {
                 const res = await fetch(`${PROJECT_URL}/rest/v1/players?select=*`, {
@@ -538,21 +518,16 @@
                         "Authorization": `Bearer ${ANON_KEY}`
                     }
                 });
-                console.log('Players response status:', res.status);
                 const players = await res.json();
-                console.log('Players data:', players);
                 const count = Array.isArray(players) ? players.length : 0;
                 container.innerText = count;
             } catch (err) {
-                console.error('Failed to load squad:', err);
                 container.innerText = '-';
             }
         }
 
 // Fire initialization once window DOM layer loads complete
         window.addEventListener('DOMContentLoaded', () => {
-            console.log('Page loaded, starting data fetch...');
-            // Run immediately
             initLiveDashboard();
             loadHomeNews();
             loadHomeKits();
@@ -560,17 +535,8 @@
             loadHomeSquad();
         });
         
-        // ALSO run immediately after script loads (in case DOMContentLoaded already fired)
-        console.log('Running immediate fetch...');
-        initLiveDashboard();
-        loadHomeNews();
-        loadHomeKits();
-        loadHomeSponsors();
-        loadHomeSquad();
-        
         // Auto-refresh every 3 seconds to show latest changes from admin (faster refresh)
         setInterval(() => {
-            console.log('Auto-refresh triggered...');
             initLiveDashboard();
             loadHomeNews();
             loadHomeKits();
