@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -494,24 +495,24 @@
             }
         }
 
-        // Load squad count for home page
+// Load squad count for home page
         async function loadHomeSquad() {
             const container = document.getElementById('home-squad-count');
             if (!container) return;
             
             try {
-                const res = await fetch(`${PROJECT_URL}/rest/v1/players?select=count`, {
+                const res = await fetch(`${PROJECT_URL}/rest/v1/players?select=*`, {
                     headers: {
                         "apikey": ANON_KEY,
                         "Authorization": `Bearer ${ANON_KEY}`
                     }
                 });
                 const players = await res.json();
-                const count = players ? players.length : 0;
+                const count = Array.isArray(players) ? players.length : 0;
                 container.innerText = count;
             } catch (err) {
                 console.error('Failed to load squad:', err);
-                container.innerText = '0';
+                container.innerText = '-';
             }
         }
 
